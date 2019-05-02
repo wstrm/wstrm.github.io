@@ -2,121 +2,121 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on optmzr</title>
-    <link>/tags/</link>
+    <link>https://optmzr.se/tags/</link>
     <description>Recent content in Tags on optmzr</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright &amp;copy; 2018-2019 William Wennerström</copyright>
     <lastBuildDate>Sun, 23 Sep 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://optmzr.se/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Batman Adv</title>
-      <link>/tags/batman-adv/</link>
+      <link>https://optmzr.se/tags/batman-adv/</link>
       <pubDate>Sun, 23 Sep 2018 00:00:00 +0000</pubDate>
       
-      <guid>/tags/batman-adv/</guid>
+      <guid>https://optmzr.se/tags/batman-adv/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Cjdns</title>
-      <link>/tags/cjdns/</link>
+      <link>https://optmzr.se/tags/cjdns/</link>
       <pubDate>Sun, 23 Sep 2018 00:00:00 +0000</pubDate>
       
-      <guid>/tags/cjdns/</guid>
+      <guid>https://optmzr.se/tags/cjdns/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Encryption</title>
-      <link>/tags/encryption/</link>
+      <link>https://optmzr.se/tags/encryption/</link>
       <pubDate>Sun, 23 Sep 2018 00:00:00 +0000</pubDate>
       
-      <guid>/tags/encryption/</guid>
+      <guid>https://optmzr.se/tags/encryption/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Font</title>
-      <link>/tags/font/</link>
+      <link>https://optmzr.se/tags/font/</link>
       <pubDate>Mon, 04 Mar 2019 00:00:00 +0000</pubDate>
       
-      <guid>/tags/font/</guid>
+      <guid>https://optmzr.se/tags/font/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Gentoo</title>
-      <link>/tags/gentoo/</link>
+      <link>https://optmzr.se/tags/gentoo/</link>
       <pubDate>Mon, 04 Mar 2019 00:00:00 +0000</pubDate>
       
-      <guid>/tags/gentoo/</guid>
+      <guid>https://optmzr.se/tags/gentoo/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Hyperboria</title>
-      <link>/tags/hyperboria/</link>
+      <link>https://optmzr.se/tags/hyperboria/</link>
       <pubDate>Sun, 23 Sep 2018 00:00:00 +0000</pubDate>
       
-      <guid>/tags/hyperboria/</guid>
+      <guid>https://optmzr.se/tags/hyperboria/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Mesh</title>
-      <link>/tags/mesh/</link>
+      <link>https://optmzr.se/tags/mesh/</link>
       <pubDate>Sun, 23 Sep 2018 00:00:00 +0000</pubDate>
       
-      <guid>/tags/mesh/</guid>
+      <guid>https://optmzr.se/tags/mesh/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Network</title>
-      <link>/tags/network/</link>
+      <link>https://optmzr.se/tags/network/</link>
       <pubDate>Sun, 23 Sep 2018 00:00:00 +0000</pubDate>
       
-      <guid>/tags/network/</guid>
+      <guid>https://optmzr.se/tags/network/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Os</title>
-      <link>/tags/os/</link>
+      <link>https://optmzr.se/tags/os/</link>
       <pubDate>Sat, 16 Jun 2018 00:00:00 +0000</pubDate>
       
-      <guid>/tags/os/</guid>
+      <guid>https://optmzr.se/tags/os/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Rendering</title>
-      <link>/tags/rendering/</link>
+      <link>https://optmzr.se/tags/rendering/</link>
       <pubDate>Mon, 04 Mar 2019 00:00:00 +0000</pubDate>
       
-      <guid>/tags/rendering/</guid>
+      <guid>https://optmzr.se/tags/rendering/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Wifi</title>
-      <link>/tags/wifi/</link>
+      <link>https://optmzr.se/tags/wifi/</link>
       <pubDate>Sun, 23 Sep 2018 00:00:00 +0000</pubDate>
       
-      <guid>/tags/wifi/</guid>
+      <guid>https://optmzr.se/tags/wifi/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Wireless</title>
-      <link>/tags/wireless/</link>
+      <link>https://optmzr.se/tags/wireless/</link>
       <pubDate>Sun, 23 Sep 2018 00:00:00 +0000</pubDate>
       
-      <guid>/tags/wireless/</guid>
+      <guid>https://optmzr.se/tags/wireless/</guid>
       <description></description>
     </item>
     

@@ -2,13 +2,13 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on optmzr</title>
-    <link>/categories/</link>
+    <link>https://optmzr.se/categories/</link>
     <description>Recent content in Categories on optmzr</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright &amp;copy; 2018-2019 William Wennerström</copyright>
     
-	<atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://optmzr.se/categories/index.xml" rel="self" type="application/rss+xml" />
     
     
   </channel>

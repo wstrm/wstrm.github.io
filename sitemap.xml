@@ -3,117 +3,117 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/about/</loc>
-    <lastmod>2019-04-15T00:00:00+00:00</lastmod>
+    <loc>https://optmzr.se/about/</loc>
+    <lastmod>2019-04-15T09:20:16+02:00</lastmod>
   </url>
   
   <url>
-    <loc>/posts/better_fonts_and_more_symbols_with_gentoo/</loc>
-    <lastmod>2019-03-04T00:00:00+00:00</lastmod>
+    <loc>https://optmzr.se/posts/better_fonts_and_more_symbols_with_gentoo/</loc>
+    <lastmod>2019-05-02T19:08:24+02:00</lastmod>
   </url>
   
   <url>
-    <loc>/posts/creating_the_real_hyperboria_in_the_north/</loc>
-    <lastmod>2018-09-23T00:00:00+00:00</lastmod>
+    <loc>https://optmzr.se/posts/creating_the_real_hyperboria_in_the_north/</loc>
+    <lastmod>2019-05-02T19:08:24+02:00</lastmod>
   </url>
   
   <url>
-    <loc>/posts/gentoo_with_dm-crypt_luks/</loc>
-    <lastmod>2019-03-03T00:00:00+00:00</lastmod>
+    <loc>https://optmzr.se/posts/gentoo_with_dm-crypt_luks/</loc>
+    <lastmod>2019-05-02T19:08:24+02:00</lastmod>
   </url>
   
   <url>
-    <loc>/tags/batman-adv/</loc>
-    <lastmod>2018-09-23T00:00:00+00:00</lastmod>
+    <loc>https://optmzr.se/tags/batman-adv/</loc>
+    <lastmod>2019-05-02T19:08:24+02:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/categories/</loc>
+    <loc>https://optmzr.se/categories/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/cjdns/</loc>
-    <lastmod>2018-09-23T00:00:00+00:00</lastmod>
+    <loc>https://optmzr.se/tags/cjdns/</loc>
+    <lastmod>2019-05-02T19:08:24+02:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/encryption/</loc>
-    <lastmod>2018-09-23T00:00:00+00:00</lastmod>
+    <loc>https://optmzr.se/tags/encryption/</loc>
+    <lastmod>2019-05-02T19:08:24+02:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/font/</loc>
-    <lastmod>2019-03-04T00:00:00+00:00</lastmod>
+    <loc>https://optmzr.se/tags/font/</loc>
+    <lastmod>2019-05-02T19:08:24+02:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/gentoo/</loc>
-    <lastmod>2019-03-04T00:00:00+00:00</lastmod>
+    <loc>https://optmzr.se/tags/gentoo/</loc>
+    <lastmod>2019-05-02T19:08:24+02:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/hyperboria/</loc>
-    <lastmod>2018-09-23T00:00:00+00:00</lastmod>
+    <loc>https://optmzr.se/tags/hyperboria/</loc>
+    <lastmod>2019-05-02T19:08:24+02:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/mesh/</loc>
-    <lastmod>2018-09-23T00:00:00+00:00</lastmod>
+    <loc>https://optmzr.se/tags/mesh/</loc>
+    <lastmod>2019-05-02T19:08:24+02:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/network/</loc>
-    <lastmod>2018-09-23T00:00:00+00:00</lastmod>
+    <loc>https://optmzr.se/tags/network/</loc>
+    <lastmod>2019-05-02T19:08:24+02:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/os/</loc>
-    <lastmod>2019-03-03T00:00:00+00:00</lastmod>
+    <loc>https://optmzr.se/tags/os/</loc>
+    <lastmod>2019-05-02T19:08:24+02:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/posts/</loc>
-    <lastmod>2019-03-04T00:00:00+00:00</lastmod>
+    <loc>https://optmzr.se/posts/</loc>
+    <lastmod>2019-05-02T19:08:24+02:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/rendering/</loc>
-    <lastmod>2019-03-04T00:00:00+00:00</lastmod>
+    <loc>https://optmzr.se/tags/rendering/</loc>
+    <lastmod>2019-05-02T19:08:24+02:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/</loc>
-    <lastmod>2018-09-23T00:00:00+00:00</lastmod>
+    <loc>https://optmzr.se/tags/</loc>
+    <lastmod>2019-05-02T19:08:24+02:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/wifi/</loc>
-    <lastmod>2018-09-23T00:00:00+00:00</lastmod>
+    <loc>https://optmzr.se/tags/wifi/</loc>
+    <lastmod>2019-05-02T19:08:24+02:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/wireless/</loc>
-    <lastmod>2018-09-23T00:00:00+00:00</lastmod>
+    <loc>https://optmzr.se/tags/wireless/</loc>
+    <lastmod>2019-05-02T19:08:24+02:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/</loc>
-    <lastmod>2019-04-15T00:00:00+00:00</lastmod>
+    <loc>https://optmzr.se/</loc>
+    <lastmod>2019-04-15T09:20:16+02:00</lastmod>
     <priority>0</priority>
   </url>
   

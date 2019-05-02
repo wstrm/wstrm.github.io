@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Os on optmzr</title>
-    <link>/tags/os/</link>
+    <link>https://optmzr.se/tags/os/</link>
     <description>Recent content in Os on optmzr</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright &amp;copy; 2018-2019 William Wennerström</copyright>
     <lastBuildDate>Sat, 16 Jun 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/tags/os/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://optmzr.se/tags/os/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Gentoo with DM-Crypt LUKS and EFI</title>
-      <link>/posts/gentoo_with_dm-crypt_luks/</link>
+      <link>https://optmzr.se/posts/gentoo_with_dm-crypt_luks/</link>
       <pubDate>Sat, 16 Jun 2018 00:00:00 +0000</pubDate>
       
-      <guid>/posts/gentoo_with_dm-crypt_luks/</guid>
+      <guid>https://optmzr.se/posts/gentoo_with_dm-crypt_luks/</guid>
       <description>What?! This article serves as somekind of meta instruction for installing Gentoo with DM-Crypt LUKS. It&amp;rsquo;s my preferred setup with a Gentoo with OpenRC and EFI running on an encrypted harddrive.
 The guide is heavily based upon Sakaki&amp;rsquo;s EFI Install Guide.
 If this is your first time installing Gentoo it&amp;rsquo;s probably a better idea to follow Sakaki&amp;rsquo;s EFI Install Guide, or follow the Gentoo&amp;rsquo;s Handbook
