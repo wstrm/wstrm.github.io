@@ -7,20 +7,10 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright &amp;copy; 2018-2019 William Wennerström</copyright>
-    <lastBuildDate>Sat, 16 Jun 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 04 Mar 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://optmzr.se/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>About Me</title>
-      <link>https://optmzr.se/about/</link>
-      <pubDate>Sat, 16 Jun 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://optmzr.se/about/</guid>
-      <description>It is far better to grasp the universe as it really is than to persist in delusion,&amp;hellip; - Carl Sagan
- Curriculum Vitae Please have a look in my CV repository.</description>
-    </item>
     
     <item>
       <title>Better fonts and more symbols with Gentoo</title>
@@ -42,6 +32,16 @@ When it comes to the licensing, Google&amp;rsquo;s Noto is under the SIL Open Fo
 Note: I&amp;rsquo;m actually talking about the Cjdns mesh network, Hyperboria, not any mythical utopia.
 Background I&amp;rsquo;ve been thinking of running a mesh network since ~4 years ago when I and a classmate had a school project where we tried to make an Cjdns network that was easy to join for everyone using a user friendly captive portal.
 So, now I&amp;rsquo;m at it again, and forcing some friends to participate in a IBSS + B.</description>
+    </item>
+    
+    <item>
+      <title>About</title>
+      <link>https://optmzr.se/about/</link>
+      <pubDate>Sat, 16 Jun 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://optmzr.se/about/</guid>
+      <description>It is far better to grasp the universe as it really is than to persist in delusion,&amp;hellip; - Carl Sagan
+ Curriculum Vitae Please have a look in my CV repository.</description>
     </item>
     
     <item>

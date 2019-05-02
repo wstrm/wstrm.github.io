@@ -3,11 +3,6 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://optmzr.se/about/</loc>
-    <lastmod>2019-04-15T09:20:16+02:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://optmzr.se/posts/better_fonts_and_more_symbols_with_gentoo/</loc>
     <lastmod>2019-05-02T19:08:24+02:00</lastmod>
   </url>
@@ -15,6 +10,11 @@
   <url>
     <loc>https://optmzr.se/posts/creating_the_real_hyperboria_in_the_north/</loc>
     <lastmod>2019-05-02T19:08:24+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://optmzr.se/about/</loc>
+    <lastmod>2019-04-15T09:20:16+02:00</lastmod>
   </url>
   
   <url>
@@ -113,7 +113,7 @@
   
   <url>
     <loc>https://optmzr.se/</loc>
-    <lastmod>2019-04-15T09:20:16+02:00</lastmod>
+    <lastmod>2019-05-02T19:08:24+02:00</lastmod>
     <priority>0</priority>
   </url>
   
