@@ -45,17 +45,21 @@ wpa_supplicant -Dnl80211,wext -i&lt;interface&gt; -c/etc/wpa.conf -B
 </code></pre><p>Remove the Stage 3 files:</p><pre><code>rm stage3-amd64-*
 </code></pre><p>Return home:</p><pre><code>cd
 </code></pre><h2 id=setup-portage>Setup Portage</h2><p>Edit the <code>/mnt/gentoo/etc/portage/make.conf</code> file (modify for your computer):</p><pre><code># The holy USE
-USE=&quot;device-mapper&quot;
+# Modify to fit your preferences.
+USE=&quot;unicode savedconfig offensive alsa zsh-completion dmenu&quot;
 
 # C and C++ compiler options for GCC.
 CFLAGS=&quot;-march=native -O2 -pipe&quot;
 CXXFLAGS=&quot;${CFLAGS}&quot;
-MAKEOPTS=&quot;-j4&quot; # 4 threads per job
-EMERGE_DEFAULT_OPTS=&quot;--jobs 2 --load-average 7.2&quot; # 2 parallel jobs, at 8*0.9 load (90 % load on all cores)
+
+# Threads and jobs for my PC, with 16 threads.
+MAKEOPTS=&quot;-j8&quot; # 8 threads per job
+EMERGE_DEFAULT_OPTS=&quot;--jobs 2 --load-average 14.4&quot; # 2 parallel jobs, at 16*0.9 load (90 % load on all cores)
+
 CPU_FLAGS_X86=&quot;aes avx f16c mmx mmxext pclmul popcnt sse sse2 sse3 sse4_1 sse4_2 ssse3&quot; # check w/ cpuid2cpuflags
 
 # Only free software, please.
-ACCEPT_LICENSE=&quot;-* @FREE CC-Sampling-Plus-1.0&quot;
+ACCEPT_LICENSE=&quot;-* @FREE&quot;
 
 # WARNING: Changing your CHOST is not something that should be done lightly.
 # Please consult http://www.gentoo.org/doc/en/change-chost.xml before changing.
@@ -84,7 +88,7 @@ FEATURES=&quot;split-elog buildpkg&quot;
 
 # Settings for X11 (make sure these are correct for your hardware).
 VIDEO_CARDS=&quot;intel i965&quot;
-INPUT_DEVICES=&quot;evdev synaptics&quot;
+INPUT_DEVICES=&quot;libinput&quot;
 </code></pre><h2 id=prepare-and-enter-chroot>Prepare and enter <code>chroot</code></h2><p>Select the correct mirror for your location:</p><pre><code>mirrorselect -i -o &gt;&gt; /mnt/gentoo/etc/portage/make.conf
 </code></pre><p>Setup <code>/mnt/gentoo/etc/portage/repos.conf</code> directory:</p><pre><code>mkdir -p /mnt/gentoo/etc/portage/repos.conf
 cp /mnt/gentoo/usr/share/portage/config/repos.conf /mnt/gentoo/etc/portage/repos.conf/gentoo.conf
@@ -210,8 +214,6 @@ die() {
 mount -t proc none /proc
 mount -t sysfs none /sys
 
-echo &quot;Welcome, dear Sir King Lord William the First...&quot;
-
 # Open encrypted partition, and place at /dev/mapper/root.
 # NOTE: Update drive letter below.
 cryptsetup open /dev/sdX2 root &amp;&amp; root=/dev/mapper/root || die
@@ -254,100 +256,115 @@ useradd -m -G users,wheel,audio,video -s /bin/bash optmzr # Change to your usern
 passwd optmzr # You'll get prompted to set the users password.
 </code></pre><p>Enter <code>visudo</code> and uncomment the <code># %wheel ALL=(ALL) NOPASSWD: ALL</code> block:</p><pre><code>visudo # Uncomment the block, and save and exit.
 </code></pre><h2 id=install-my-favorite-portage-set>Install my favorite Portage set</h2><p>Below you have my favorites, it contains a X11 environment running <code>dwm</code>. Add it
-to <code>/etc/portage/sets/favorites</code>:</p><pre><code>app-admin/pass
-app-admin/stow
-app-admin/sudo
-app-arch/rar
-app-arch/unrar
-app-arch/unzip
-app-arch/zip
-app-backup/restic
-app-editors/neovim
+to <code>/etc/portage/sets/favorites</code>:</p><pre><code># Portage
 app-eselect/eselect-repository
-app-eselect/eselect-vi
-app-misc/screen
 app-portage/cpuid2cpuflags
 app-portage/eix
-app-portage/elogv
-app-portage/gentoolkit
 app-portage/repoman
-app-shells/gentoo-zsh-completions
+app-portage/gentoolkit
+
+# ZSH
 app-shells/zsh
 app-shells/zsh-completions
+app-shells/gentoo-zsh-completions
+
+# Mutt
 app-text/antiword
 app-text/extract_url
 app-text/mupdf
-app-text/poppler
-app-text/tree
-app-vim/gentoo-syntax
-dev-lang/go
+mail-client/mutt
+media-libs/exiftool
+
+# Neovim
+app-editors/neovim
+media-fonts/powerline-symbols
+
+# Python
 dev-python/pip
 dev-python/virtualenv
+
+# C
 dev-util/ctags
 dev-util/strace
+
+# Git
 dev-vcs/git
 dev-vcs/git-lfs
-mail-client/mutt
-mail-mta/msmtp
-media-fonts/powerline-symbols
+
+# Go
+dev-lang/go
+
+# Backup
+sys-process/cronie
+app-backup/restic
+
+# Remote
+net-misc/mosh
+
+# Connectivity
+net-misc/dhcpcd
+net-wireless/wpa_supplicant
+net-vpn/openvpn
+
+# Powersave
+sys-apps/hprofile
+
+# Time
+net-misc/chrony
+
+# Tools
+app-admin/pass
+app-admin/stow
+app-admin/sudo
+app-arch/unzip
+app-arch/zip
+app-misc/screen
+app-text/tree
 media-gfx/feh
-media-gfx/gimp
-media-gfx/graphviz
 media-gfx/scrot
-media-libs/exiftool
-media-libs/imlib2
-media-sound/alsa-utils
 media-video/ffmpeg
-media-video/mpv
+media-sound/alsa-utils
 net-analyzer/nethogs
-net-analyzer/openbsd-netcat
 net-analyzer/tcpdump
 net-analyzer/traceroute
 net-dns/bind-tools
-net-dns/openresolv
-net-misc/chrony
-net-misc/dhcpcd
-net-misc/mosh
-net-misc/youtube-dl
-net-vpn/openvpn
-sys-apps/exa
-sys-apps/haveged
-sys-apps/hprofile
-sys-apps/mlocate
 sys-apps/pciutils
+net-misc/youtube-dl
+sys-apps/mlocate
 sys-apps/ripgrep
-sys-devel/gcc
-sys-fs/cryptsetup
-sys-fs/ncdu
-sys-kernel/gentoo-sources
-sys-kernel/linux-firmware
-sys-power/suspend
-sys-process/cronie
 sys-process/htop
-www-client/firefox
 www-client/lynx
-www-client/surf
-x11-apps/setxkbmap
-x11-apps/xbacklight
-x11-apps/xev
-x11-apps/xfd
-x11-apps/xhost
-x11-apps/xlsfonts
-x11-apps/xmodmap
-x11-apps/xrandr
-x11-apps/xwininfo
+
+# Sound
+media-libs/alsa-lib
+
+# X11 system
 x11-base/xorg-drivers
 x11-base/xorg-server
-x11-libs/gtk+
+x11-wm/dwm
+
+# X11 apps
+x11-apps/xprop
 x11-misc/dmenu
 x11-misc/slock
 x11-misc/slstatus
 x11-misc/tabbed
+x11-terms/st
+www-client/surf
+
+# X11 tools
 x11-misc/unclutter
 x11-misc/wmname
 x11-misc/xssstate
-x11-terms/st
-x11-wm/dwm
+x11-apps/setxkbmap
+x11-apps/xbacklight
+x11-apps/xev
+x11-apps/xmodmap
+x11-apps/xrandr
+x11-misc/xclip
+
+# Misc
+sys-apps/haveged
 </code></pre><p>Before emerging, you have to add the <code>drkhsh</code> overlay (where <code>slstatus</code> resides).
 Begin by installing <code>app-eselect/eselect-repository</code> and <code>dev-vcs/git</code> so you
 can use third-party <code>git</code> overlays:</p><pre><code>emerge -a app-eselect/eselect-repository dev-vcs/git
