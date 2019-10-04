@@ -1,103 +1,8 @@
-<!DOCTYPE html>
-<html lang="en-us">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
-  
-  <title>Gentoo with DM-Crypt LUKS and EFI</title>
-  <meta property="og:title" content="Gentoo with DM-Crypt LUKS and EFI" />
-  <meta name="twitter:title" content="Gentoo with DM-Crypt LUKS and EFI" />
-  
-
-  
-  <meta name="description" content="Meta guide to install Gentoo with DM-Crypt LUKS and EFI.">
-  <meta property="og:description" content="Meta guide to install Gentoo with DM-Crypt LUKS and EFI.">
-  <meta name="twitter:description" content="Meta guide to install Gentoo with DM-Crypt LUKS and EFI.">
-  
-
-  <meta name="author" content="William Wennerström"/>
-  <meta property="og:site_name" content="optmzr" />
-  <meta property="og:url" content="https://optmzr.se/posts/gentoo_with_dm-crypt_luks/" />
-
-  
-  <meta name="twitter:card" content="summary" />
-
-  
-
-  
-  <meta property="og:type" content="article" />
-  
-  
-  
-  <meta name="generator" content="Hugo 0.54.0" /><link rel="stylesheet" href="https://optmzr.se/css/style.css" />
-  
-  
-  <script type="text/javascript" src="https://optmzr.se/js/bundle.js"></script>
-  
-
-</head>
-
-<body>
-  <a href="#main" class="skip-link p-screen-reader-text">Skip to content</a>
-  <svg xmlns="http://www.w3.org/2000/svg" style="display: none;" aria-hidden="true"> <symbol id="icon-500px" viewBox="0 0 16 16"><g> <path d="M3.953 10.512a5.24 5.24 0 0 0 6.996 3.141c.625-.262 1.184-.641 1.666-1.122s.859-1.041 1.122-1.666c.272-.647.412-1.331.412-2.037s-.137-1.394-.412-2.037c-.262-.625-.641-1.184-1.122-1.666s-1.041-.859-1.666-1.122a5.226 5.226 0 0 0-2.037-.413c-.716 0-1.431.144-2.066.413-.509.216-1.372.769-1.875 1.291l-.003.003V.984h7.241c.262-.003.262-.372.262-.491 0-.122 0-.487-.266-.491H4.377a.343.343 0 0 0-.344.341v6.066c0 .197.244.338.472.384.444.094.544-.047.653-.197l.016-.019c.166-.247.681-.766.688-.772a4.262 4.262 0 0 1 3.037-1.25c1.147 0 2.222.444 3.028 1.25a4.245 4.245 0 0 1 1.256 3.019 4.236 4.236 0 0 1-1.25 3.019 4.336 4.336 0 0 1-3.047 1.25 4.136 4.136 0 0 1-2.159-.597l.003-3.688c0-.491.213-1.028.572-1.431a2.09 2.09 0 0 1 1.588-.716c.594 0 1.15.225 1.566.634.409.406.637.95.637 1.528a2.179 2.179 0 0 1-2.206 2.197c-.238 0-.672-.106-.691-.109-.25-.075-.356.272-.391.387-.134.441.069.528.109.541.397.125.659.147 1.003.147a3.173 3.173 0 0 0 3.169-3.169c0-1.734-1.422-3.144-3.166-3.144-.856 0-1.659.328-2.263.919-.575.566-.903 1.319-.903 2.069v.019c-.003.094-.003 2.306-.006 3.031l-.003-.003c-.328-.363-.653-.919-.869-1.488-.084-.222-.275-.184-.534-.103-.125.034-.469.141-.391.394zm3.722-.865c0 .106.097.2.156.253l.019.019c.1.097.194.147.281.147a.181.181 0 0 0 .131-.05c.044-.041.537-.544.588-.591l.553.55c.05.056.106.088.172.088.088 0 .184-.053.284-.156.238-.244.119-.375.063-.438l-.559-.559.584-.588c.128-.137.016-.284-.097-.397-.162-.162-.322-.206-.422-.112l-.581.581-.588-.588a.16.16 0 0 0-.113-.047c-.078 0-.172.053-.275.156-.181.181-.219.306-.125.406l.588.584-.584.584c-.053.05-.078.103-.075.156zm1.278-7.931c-.938 0-1.938.191-2.669.506a.207.207 0 0 0-.134.181.753.753 0 0 0 .069.337c.047.116.166.425.4.334a6.689 6.689 0 0 1 2.334-.444 6.35 6.35 0 0 1 2.469.497c.622.263 1.206.644 1.844 1.194a.22.22 0 0 0 .147.059c.125 0 .244-.122.347-.237.169-.191.287-.35.119-.509a6.858 6.858 0 0 0-2.1-1.356 7.326 7.326 0 0 0-2.825-.563zM14.006 13.3c-.113-.113-.209-.178-.294-.203s-.162-.006-.222.053l-.056.056a6.32 6.32 0 0 1-6.938 1.356 6.336 6.336 0 0 1-2.013-1.356 6.046 6.046 0 0 1-1.356-2.012c-.288-.713-.381-1.247-.413-1.422-.003-.016-.006-.028-.006-.037-.041-.206-.231-.222-.503-.178-.112.019-.459.072-.428.319v.006a7.261 7.261 0 0 0 2.04 3.994 7.266 7.266 0 0 0 10.288 0l.059-.059c.069-.084.134-.225-.159-.516z"/> </g></symbol> <symbol id="icon-codepen" viewBox="0 0 16 16"><g> <path d="M14.777 5.751l-7-4.667a.5.5 0 0 0-.555 0l-7 4.667a.501.501 0 0 0-.223.416v4.667c0 .167.084.323.223.416l7 4.667a.5.5 0 0 0 .554 0l7-4.667a.501.501 0 0 0 .223-.416V6.167a.501.501 0 0 0-.223-.416zM7.5 10.232L4.901 8.5 7.5 6.768 10.099 8.5 7.5 10.232zM8 5.899V2.434l5.599 3.732L11 7.898l-3-2zm-1 0l-3 2-2.599-1.732L7 2.435V5.9zM3.099 8.5L1 9.899V7.101L3.099 8.5zM4 9.101l3 2v3.465l-5.599-3.732L4 9.102zm4 2l3-2 2.599 1.732L8 14.565V11.1zM11.901 8.5L14 7.101v2.798L11.901 8.5z"/> </g></symbol> <symbol id="icon-dribbble" viewBox="0 0 16 16"><g> <path d="M8 16c-4.412 0-8-3.588-8-8s3.587-8 8-8c4.412 0 8 3.587 8 8s-3.588 8-8 8zm6.747-6.906c-.234-.075-2.116-.634-4.256-.291a29.7 29.7 0 0 1 1.328 4.872 6.845 6.845 0 0 0 2.928-4.581zM10.669 14.3c-.103-.6-.497-2.688-1.456-5.181-.016.006-.031.009-.044.016-3.856 1.344-5.241 4.016-5.362 4.266a6.807 6.807 0 0 0 6.863.9zm-7.747-1.722c.156-.266 2.031-3.369 5.553-4.509a7.04 7.04 0 0 1 .269-.081 24.04 24.04 0 0 0-.553-1.159c-3.409 1.022-6.722.978-7.022.975-.003.069-.003.138-.003.209 0 1.753.666 3.356 1.756 4.566zM1.313 6.609c.306.003 3.122.016 6.319-.831a43.092 43.092 0 0 0-2.534-3.953 6.854 6.854 0 0 0-3.784 4.784zM6.4 1.366a36.612 36.612 0 0 1 2.55 4c2.431-.909 3.459-2.294 3.581-2.469A6.799 6.799 0 0 0 6.4 1.366zm6.891 2.325c-.144.194-1.291 1.663-3.816 2.694.159.325.313.656.453.991.05.119.1.234.147.353 2.275-.284 4.534.172 4.759.219a6.816 6.816 0 0 0-1.544-4.256z"/> </g></symbol> <symbol id="icon-facebook" viewBox="0 0 16 16"><g> <path d="M9.5 3H12V0H9.5C7.57 0 6 1.57 6 3.5V5H4v3h2v8h3V8h2.5l.5-3H9V3.5c0-.271.229-.5.5-.5z"/> </g></symbol> <symbol id="icon-feed" viewBox="0 0 16 16"><g> <path d="M2.13 11.733c-1.175 0-2.13.958-2.13 2.126 0 1.174.955 2.122 2.13 2.122a2.126 2.126 0 0 0 2.133-2.122 2.133 2.133 0 0 0-2.133-2.126zM.002 5.436v3.067c1.997 0 3.874.781 5.288 2.196a7.45 7.45 0 0 1 2.192 5.302h3.08c0-5.825-4.739-10.564-10.56-10.564zM.006 0v3.068C7.128 3.068 12.924 8.87 12.924 16H16C16 7.18 8.824 0 .006 0z"/> </g></symbol> <symbol id="icon-flickr" viewBox="0 0 16 16"><g> <path d="M0 8.5a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0zm9 0a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/> </g></symbol> <symbol id="icon-github" viewBox="0 0 16 16"><g> <path d="M8 .198a8 8 0 0 0-2.529 15.591c.4.074.547-.174.547-.385 0-.191-.008-.821-.011-1.489-2.226.484-2.695-.944-2.695-.944-.364-.925-.888-1.171-.888-1.171-.726-.497.055-.486.055-.486.803.056 1.226.824 1.226.824.714 1.223 1.872.869 2.328.665.072-.517.279-.87.508-1.07-1.777-.202-3.645-.888-3.645-3.954 0-.873.313-1.587.824-2.147-.083-.202-.357-1.015.077-2.117 0 0 .672-.215 2.201.82A7.672 7.672 0 0 1 8 4.066c.68.003 1.365.092 2.004.269 1.527-1.035 2.198-.82 2.198-.82.435 1.102.162 1.916.079 2.117.513.56.823 1.274.823 2.147 0 3.073-1.872 3.749-3.653 3.947.287.248.543.735.543 1.481 0 1.07-.009 1.932-.009 2.195 0 .213.144.462.55.384A8 8 0 0 0 8.001.196z"/> </g></symbol> <symbol id="icon-gitlab" viewBox="0 0 28 28"><g> <path d="M1.625 11.031L14 26.89.437 17.046a1.092 1.092 0 0 1-.391-1.203l1.578-4.813zm7.219 0h10.313L14.001 26.89zM5.75 1.469l3.094 9.562H1.625l3.094-9.562a.548.548 0 0 1 1.031 0zm20.625 9.562l1.578 4.813a1.09 1.09 0 0 1-.391 1.203l-13.563 9.844 12.375-15.859zm0 0h-7.219l3.094-9.562a.548.548 0 0 1 1.031 0z"/> </g></symbol> <symbol id="icon-google-plus" viewBox="0 0 16 16"><g> <path d="M5.091 7.147v1.747h2.888c-.116.75-.872 2.197-2.888 2.197-1.737 0-3.156-1.441-3.156-3.216s1.419-3.216 3.156-3.216c.991 0 1.65.422 2.028.784L8.5 4.112c-.888-.828-2.037-1.331-3.409-1.331C2.275 2.784 0 5.059 0 7.875s2.275 5.091 5.091 5.091c2.937 0 4.888-2.066 4.888-4.975 0-.334-.037-.591-.081-.844H5.092zM16 7h-1.5V5.5H13V7h-1.5v1.5H13V10h1.5V8.5H16z"/> </g></symbol> <symbol id="icon-instagram" viewBox="0 0 22 22"><g> <path d="M15.445 0H6.554A6.559 6.559 0 0 0 0 6.554v8.891A6.559 6.559 0 0 0 6.554 22h8.891a6.56 6.56 0 0 0 6.554-6.555V6.554A6.557 6.557 0 0 0 15.445 0zm4.342 15.445a4.343 4.343 0 0 1-4.342 4.342H6.554a4.341 4.341 0 0 1-4.341-4.342V6.554a4.34 4.34 0 0 1 4.341-4.341h8.891a4.342 4.342 0 0 1 4.341 4.341l.001 8.891z"/> <path d="M11 5.312A5.693 5.693 0 0 0 5.312 11 5.694 5.694 0 0 0 11 16.688 5.694 5.694 0 0 0 16.688 11 5.693 5.693 0 0 0 11 5.312zm0 9.163a3.475 3.475 0 1 1-.001-6.95 3.475 3.475 0 0 1 .001 6.95zm5.7-10.484a1.363 1.363 0 1 1-1.364 1.364c0-.752.51-1.364 1.364-1.364z"/> </g></symbol> <symbol id="icon-linkedin" viewBox="0 0 16 16"><g> <path d="M6 6h2.767v1.418h.04C9.192 6.727 10.134 6 11.539 6 14.46 6 15 7.818 15 10.183V15h-2.885v-4.27c0-1.018-.021-2.329-1.5-2.329-1.502 0-1.732 1.109-1.732 2.255V15H6V6zM1 6h3v9H1V6zM4 3.5a1.5 1.5 0 1 1-3.001-.001A1.5 1.5 0 0 1 4 3.5z"/> </g></symbol> <symbol id="icon-mail" viewBox="0 0 22 18"><g> <path fill="#000" d="M0 17.225V.776h22v16.447H0v.002zm3.011-1.815h15.978l-5.111-5.115L11 13.179l-2.877-2.883-5.112 5.114zm-1.216-1.275l5.077-5.09L1.795 3.98v10.155zm13.332-5.09l5.079 5.09V3.979l-5.079 5.066zm-4.126 1.588l8.022-8.027-16.045-.001 8.023 8.028z"/> </g></symbol> <symbol id="icon-npm" viewBox="0 0 16 16"><g> <path d="M0 0v16h16V0H0zm13 13h-2V5H8v8H3V3h10v10z"/> </g></symbol> <symbol id="icon-pinterest" viewBox="0 0 16 16"><g> <path d="M8 1.069a6.93 6.93 0 0 0-2.525 13.384c-.059-.547-.116-1.391.025-1.988.125-.541.813-3.444.813-3.444s-.206-.416-.206-1.028c0-.963.559-1.684 1.253-1.684.591 0 .878.444.878.975 0 .594-.378 1.484-.575 2.306-.166.691.344 1.253 1.025 1.253 1.231 0 2.178-1.3 2.178-3.175 0-1.659-1.194-2.819-2.894-2.819-1.972 0-3.128 1.478-3.128 3.009 0 .597.228 1.234.516 1.581.056.069.066.128.047.2a95.89 95.89 0 0 1-.194.787c-.031.128-.1.153-.231.094-.866-.403-1.406-1.669-1.406-2.684 0-2.188 1.587-4.194 4.578-4.194 2.403 0 4.272 1.712 4.272 4.003 0 2.388-1.506 4.313-3.597 4.313-.703 0-1.362-.366-1.588-.797 0 0-.347 1.322-.431 1.647-.156.603-.578 1.356-.862 1.816a6.93 6.93 0 0 0 8.984-6.622 6.931 6.931 0 0 0-6.931-6.934z"/> </g></symbol> <symbol id="icon-search" viewBox="0 0 16 16"><g> <path d="M15.504 13.616l-3.79-3.223c-.392-.353-.811-.514-1.149-.499a6 6 0 1 0-.672.672c-.016.338.146.757.499 1.149l3.223 3.79c.552.613 1.453.665 2.003.115s.498-1.452-.115-2.003zM6 10a4 4 0 1 1 0-8 4 4 0 0 1 0 8z"/> </g></symbol> <symbol id="icon-tumblr" viewBox="0 0 16 16"><g> <path d="M9.001 7v3.659c0 .928-.012 1.463.086 1.727.098.262.342.534.609.691.354.212.758.318 1.214.318.81 0 1.289-.107 2.09-.633v2.405a9.089 9.089 0 0 1-1.833.639A7.93 7.93 0 0 1 9.369 16a4.9 4.9 0 0 1-1.725-.276 4.195 4.195 0 0 1-1.438-.79c-.398-.343-.672-.706-.826-1.091s-.23-.944-.23-1.676V6.556H3.003V4.29c.628-.204 1.331-.497 1.778-.877a4.386 4.386 0 0 0 1.08-1.374C6.133 1.505 6.32.825 6.422 0h2.579v4H13v3H9.001z"/> </g></symbol> <symbol id="icon-twitter" viewBox="0 0 16 16"><g> <path d="M16 3.538a6.461 6.461 0 0 1-1.884.516 3.301 3.301 0 0 0 1.444-1.816 6.607 6.607 0 0 1-2.084.797 3.28 3.28 0 0 0-2.397-1.034 3.28 3.28 0 0 0-3.197 4.028 9.321 9.321 0 0 1-6.766-3.431 3.284 3.284 0 0 0 1.015 4.381A3.301 3.301 0 0 1 .643 6.57v.041A3.283 3.283 0 0 0 3.277 9.83a3.291 3.291 0 0 1-1.485.057 3.293 3.293 0 0 0 3.066 2.281 6.586 6.586 0 0 1-4.862 1.359 9.286 9.286 0 0 0 5.034 1.475c6.037 0 9.341-5.003 9.341-9.341 0-.144-.003-.284-.009-.425a6.59 6.59 0 0 0 1.637-1.697z"/> </g></symbol> <symbol id="icon-vimeo" viewBox="0 0 16 16"><g> <path d="M15.994 4.281c-.072 1.556-1.159 3.691-3.263 6.397-2.175 2.825-4.016 4.241-5.522 4.241-.931 0-1.722-.859-2.366-2.581-.431-1.578-.859-3.156-1.291-4.734-.478-1.722-.991-2.581-1.541-2.581-.119 0-.538.253-1.256.753l-.753-.969c.791-.694 1.569-1.388 2.334-2.081 1.053-.909 1.844-1.387 2.372-1.438 1.244-.119 2.013.731 2.3 2.553.309 1.966.525 3.188.647 3.666.359 1.631.753 2.447 1.184 2.447.334 0 .838-.528 1.509-1.588.669-1.056 1.028-1.862 1.078-2.416.097-.912-.262-1.372-1.078-1.372a2.98 2.98 0 0 0-1.184.263c.787-2.575 2.287-3.825 4.506-3.753 1.641.044 2.416 1.109 2.322 3.194z"/> </g></symbol> <symbol id="icon-wordpress" viewBox="0 0 16 16"><g> <path d="M2 8c0 2.313 1.38 4.312 3.382 5.259L2.52 5.622A5.693 5.693 0 0 0 2 8zm10.05-.295c0-.722-.266-1.222-.495-1.612-.304-.482-.589-.889-.589-1.371 0-.537.418-1.037 1.008-1.037.027 0 .052.003.078.005A6.064 6.064 0 0 0 8 2.156 6.036 6.036 0 0 0 2.987 4.79c.141.004.274.007.386.007.627 0 1.599-.074 1.599-.074.323-.018.361.444.038.482 0 0-.325.037-.687.055l2.185 6.33 1.313-3.835-.935-2.495a12.304 12.304 0 0 1-.629-.055c-.323-.019-.285-.5.038-.482 0 0 .991.074 1.58.074.627 0 1.599-.074 1.599-.074.323-.018.362.444.038.482 0 0-.326.037-.687.055l2.168 6.282.599-1.947c.259-.809.457-1.389.457-1.889zm-3.945.806l-1.8 5.095a6.148 6.148 0 0 0 3.687-.093.52.52 0 0 1-.043-.081L8.105 8.511zm5.16-3.315c.026.186.04.386.04.601 0 .593-.114 1.259-.456 2.093l-1.833 5.16c1.784-1.013 2.983-2.895 2.983-5.051a5.697 5.697 0 0 0-.735-2.803zM8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm0 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14z"/> </g></symbol> <symbol id="icon-youtube" viewBox="0 0 16 16"><g> <path d="M15.841 4.8s-.156-1.103-.637-1.587c-.609-.637-1.291-.641-1.603-.678-2.237-.163-5.597-.163-5.597-.163h-.006s-3.359 0-5.597.163c-.313.038-.994.041-1.603.678C.317 3.697.164 4.8.164 4.8S.005 6.094.005 7.391v1.213c0 1.294.159 2.591.159 2.591s.156 1.103.634 1.588c.609.637 1.409.616 1.766.684 1.281.122 5.441.159 5.441.159s3.363-.006 5.6-.166c.313-.037.994-.041 1.603-.678.481-.484.637-1.588.637-1.588s.159-1.294.159-2.591V7.39c-.003-1.294-.162-2.591-.162-2.591zm-9.494 5.275V5.578l4.322 2.256-4.322 2.241z"/> </g></symbol></svg>
-  <header class="l-header">
-    
-    <p class="c-title p-title"><a href="https://optmzr.se/" class="p-title__link">optmzr</a></p>
-    
-    
-    <p class="p-subtitle">
-      William Wennerström&#39;s personal web page.
-    </p>
-    
-  </header>
-  <main id="main" class="l-main">
-
-
-<article class="p-article">
-  <header>
-    <h1>Gentoo with DM-Crypt LUKS and EFI</h1>
-    <div>
-      <div class="c-time">
-        Posted on
-        <time datetime="2018-06-16T00:00:00Z">
-          Jun 16, 2018
-        </time>
-      </div>
-      
-      <a href="https://optmzr.se/tags/gentoo" class="c-tag">gentoo</a>
-      
-      <a href="https://optmzr.se/tags/os" class="c-tag">os</a>
-      
-      <a href="https://optmzr.se/tags/encryption" class="c-tag">encryption</a>
-      
-    </div>
-  </header>
-  
-  <section id="js-article" class="p-article__body">
-    
-
-<h2 id="what">What?!</h2>
-
-<p>This article serves as somekind of meta instruction for installing Gentoo with DM-Crypt LUKS. It&rsquo;s my preferred setup with a Gentoo with OpenRC and EFI running on an encrypted harddrive.</p>
-
-<p>The guide is heavily based upon <a href="https://wiki.gentoo.org/wiki/Sakaki%28s_EFI_Install_Guide">Sakaki&rsquo;s EFI Install Guide</a>.</p>
-
-<p>If this is your first time installing Gentoo it&rsquo;s probably a better idea to follow <a href="https://wiki.gentoo.org/wiki/Sakaki%28s_EFI_Install_Guide">Sakaki&rsquo;s EFI Install Guide</a>, or follow the <a href="https:/wiki.gentoo.org/wiki/Handbook:AMD64/Full/Installation">Gentoo&rsquo;s Handbook</a></p>
-
-<h2 id="burn-minimal-installation-cd-to-usb">Burn Minimal Installation CD to USB</h2>
-
-<p>Download the Minimal Installation CD from: <a href="https://www.gentoo.org/downloads/">https://www.gentoo.org/downloads/</a></p>
-
-<p>Write the ISO to the USB drive using DD:</p>
-
-<pre><code>dd if=/path/to/image.iso of=/dev/sdX bs=8192k
-</code></pre>
-
-<h2 id="boot-and-connect-to-a-network">Boot and connect to a network</h2>
-
-<p>Either connect a network cable, or connect to a WLAN using:</p>
-
-<pre><code># Add AP w/ passphrase to config
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><title>Gentoo with DM-Crypt LUKS and EFI</title><meta property=og:title content="Gentoo with DM-Crypt LUKS and EFI"><meta name=twitter:title content="Gentoo with DM-Crypt LUKS and EFI"><meta name=description content="Meta guide to install Gentoo with DM-Crypt LUKS and EFI."><meta property=og:description content="Meta guide to install Gentoo with DM-Crypt LUKS and EFI."><meta name=twitter:description content="Meta guide to install Gentoo with DM-Crypt LUKS and EFI."><meta name=author content="William Wennerström"><meta property=og:site_name content=optmzr><meta property=og:url content=https://optmzr.se/posts/gentoo_with_dm-crypt_luks/><meta name=twitter:card content=summary><meta property=og:type content=article><meta name=generator content="Hugo 0.54.0"><link rel=stylesheet href=https://optmzr.se/css/style.css><script type=text/javascript src=https://optmzr.se/js/bundle.js></script></head><body><a href=#main class="skip-link p-screen-reader-text">Skip to content</a><svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true"><symbol id="icon-500px" viewBox="0 0 16 16"><g><path d="M3.953 10.512a5.24 5.24.0 0 0 6.996 3.141c.625-.262 1.184-.641 1.666-1.122s.859-1.041 1.122-1.666c.272-.647.412-1.331.412-2.037s-.137-1.394-.412-2.037c-.262-.625-.641-1.184-1.122-1.666s-1.041-.859-1.666-1.122a5.226 5.226.0 0 0-2.037-.413c-.716.0-1.431.144-2.066.413-.509.216-1.372.769-1.875 1.291l-.003.003V.984h7.241c.262-.003.262-.372.262-.491.0-.122.0-.487-.266-.491H4.377a.343.343.0 0 0-.344.341v6.066c0 .197.244.338.472.384.444.094.544-.047.653-.197l.016-.019c.166-.247.681-.766.688-.772a4.262 4.262.0 0 1 3.037-1.25c1.147.0 2.222.444 3.028 1.25a4.245 4.245.0 0 1 1.256 3.019 4.236 4.236.0 0 1-1.25 3.019 4.336 4.336.0 0 1-3.047 1.25 4.136 4.136.0 0 1-2.159-.597l.003-3.688c0-.491.213-1.028.572-1.431a2.09 2.09.0 0 1 1.588-.716c.594.0 1.15.225 1.566.634.409.406.637.95.637 1.528a2.179 2.179.0 0 1-2.206 2.197c-.238.0-.672-.106-.691-.109-.25-.075-.356.272-.391.387-.134.441.069.528.109.541.397.125.659.147 1.003.147a3.173 3.173.0 0 0 3.169-3.169c0-1.734-1.422-3.144-3.166-3.144-.856.0-1.659.328-2.263.919-.575.566-.903 1.319-.903 2.069v.019c-.003.094-.003 2.306-.006 3.031l-.003-.003c-.328-.363-.653-.919-.869-1.488-.084-.222-.275-.184-.534-.103-.125.034-.469.141-.391.394zm3.722-.865c0 .106.097.2.156.253l.019.019c.1.097.194.147.281.147a.181.181.0 0 0 .131-.05c.044-.041.537-.544.588-.591l.553.55c.05.056.106.088.172.088.088.0.184-.053.284-.156.238-.244.119-.375.063-.438l-.559-.559.584-.588c.128-.137.016-.284-.097-.397-.162-.162-.322-.206-.422-.112l-.581.581-.588-.588a.16.16.0 0 0-.113-.047c-.078.0-.172.053-.275.156-.181.181-.219.306-.125.406l.588.584-.584.584c-.053.05-.078.103-.075.156zm1.278-7.931c-.938.0-1.938.191-2.669.506a.207.207.0 0 0-.134.181.753.753.0 0 0 .069.337c.047.116.166.425.4.334a6.689 6.689.0 0 1 2.334-.444 6.35 6.35.0 0 1 2.469.497c.622.263 1.206.644 1.844 1.194a.22.22.0 0 0 .147.059c.125.0.244-.122.347-.237.169-.191.287-.35.119-.509a6.858 6.858.0 0 0-2.1-1.356 7.326 7.326.0 0 0-2.825-.563zM14.006 13.3c-.113-.113-.209-.178-.294-.203s-.162-.006-.222.053l-.056.056a6.32 6.32.0 0 1-6.938 1.356 6.336 6.336.0 0 1-2.013-1.356 6.046 6.046.0 0 1-1.356-2.012c-.288-.713-.381-1.247-.413-1.422-.003-.016-.006-.028-.006-.037-.041-.206-.231-.222-.503-.178-.112.019-.459.072-.428.319v.006a7.261 7.261.0 0 0 2.04 3.994 7.266 7.266.0 0 0 10.288.0l.059-.059c.069-.084.134-.225-.159-.516z"/></g></symbol><symbol id="icon-codepen" viewBox="0 0 16 16"><g><path d="M14.777 5.751l-7-4.667a.5.5.0 0 0-.555.0l-7 4.667a.501.501.0 0 0-.223.416v4.667c0 .167.084.323.223.416l7 4.667a.5.5.0 0 0 .554.0l7-4.667a.501.501.0 0 0 .223-.416V6.167a.501.501.0 0 0-.223-.416zM7.5 10.232 4.901 8.5 7.5 6.768 10.099 8.5 7.5 10.232zM8 5.899V2.434l5.599 3.732L11 7.898l-3-2zm-1 0-3 2-2.599-1.732L7 2.435V5.9zM3.099 8.5 1 9.899V7.101L3.099 8.5zM4 9.101l3 2v3.465l-5.599-3.732L4 9.102zm4 2 3-2 2.599 1.732L8 14.565V11.1zM11.901 8.5 14 7.101v2.798L11.901 8.5z"/></g></symbol><symbol id="icon-dribbble" viewBox="0 0 16 16"><g><path d="M8 16c-4.412.0-8-3.588-8-8s3.587-8 8-8c4.412.0 8 3.587 8 8s-3.588 8-8 8zm6.747-6.906c-.234-.075-2.116-.634-4.256-.291a29.7 29.7.0 0 1 1.328 4.872 6.845 6.845.0 0 0 2.928-4.581zM10.669 14.3c-.103-.6-.497-2.688-1.456-5.181-.016.006-.031.009-.044.016-3.856 1.344-5.241 4.016-5.362 4.266a6.807 6.807.0 0 0 6.863.9zm-7.747-1.722c.156-.266 2.031-3.369 5.553-4.509a7.04 7.04.0 0 1 .269-.081 24.04 24.04.0 0 0-.553-1.159c-3.409 1.022-6.722.978-7.022.975-.003.069-.003.138-.003.209.0 1.753.666 3.356 1.756 4.566zM1.313 6.609c.306.003 3.122.016 6.319-.831a43.092 43.092.0 0 0-2.534-3.953 6.854 6.854.0 0 0-3.784 4.784zM6.4 1.366a36.612 36.612.0 0 1 2.55 4c2.431-.909 3.459-2.294 3.581-2.469A6.799 6.799.0 0 0 6.4 1.366zm6.891 2.325c-.144.194-1.291 1.663-3.816 2.694.159.325.313.656.453.991.05.119.1.234.147.353 2.275-.284 4.534.172 4.759.219a6.816 6.816.0 0 0-1.544-4.256z"/></g></symbol><symbol id="icon-facebook" viewBox="0 0 16 16"><g><path d="M9.5 3H12V0H9.5C7.57.0 6 1.57 6 3.5V5H4v3h2v8h3V8h2.5l.5-3H9V3.5c0-.271.229-.5.5-.5z"/></g></symbol><symbol id="icon-feed" viewBox="0 0 16 16"><g><path d="M2.13 11.733c-1.175.0-2.13.958-2.13 2.126.0 1.174.955 2.122 2.13 2.122a2.126 2.126.0 0 0 2.133-2.122 2.133 2.133.0 0 0-2.133-2.126zM.002 5.436v3.067c1.997.0 3.874.781 5.288 2.196a7.45 7.45.0 0 1 2.192 5.302h3.08c0-5.825-4.739-10.564-10.56-10.564zM.006.0v3.068C7.128 3.068 12.924 8.87 12.924 16H16C16 7.18 8.824.0.006.0z"/></g></symbol><symbol id="icon-flickr" viewBox="0 0 16 16"><g><path d="M0 8.5a3.5 3.5.0 1 1 7 0 3.5 3.5.0 0 1-7 0zm9 0a3.5 3.5.0 1 1 7 0 3.5 3.5.0 0 1-7 0z"/></g></symbol><symbol id="icon-github" viewBox="0 0 16 16"><g><path d="M8 .198a8 8 0 0 0-2.529 15.591c.4.074.547-.174.547-.385.0-.191-.008-.821-.011-1.489-2.226.484-2.695-.944-2.695-.944-.364-.925-.888-1.171-.888-1.171-.726-.497.055-.486.055-.486.803.056 1.226.824 1.226.824.714 1.223 1.872.869 2.328.665.072-.517.279-.87.508-1.07-1.777-.202-3.645-.888-3.645-3.954.0-.873.313-1.587.824-2.147-.083-.202-.357-1.015.077-2.117.0.0.672-.215 2.201.82A7.672 7.672.0 0 1 8 4.066c.68.003 1.365.092 2.004.269 1.527-1.035 2.198-.82 2.198-.82.435 1.102.162 1.916.079 2.117.513.56.823 1.274.823 2.147.0 3.073-1.872 3.749-3.653 3.947.287.248.543.735.543 1.481.0 1.07-.009 1.932-.009 2.195.0.213.144.462.55.384A8 8 0 0 0 8.001.196z"/></g></symbol><symbol id="icon-gitlab" viewBox="0 0 28 28"><g><path d="M1.625 11.031 14 26.89.437 17.046a1.092 1.092.0 0 1-.391-1.203l1.578-4.813zm7.219.0h10.313L14.001 26.89zM5.75 1.469l3.094 9.562H1.625l3.094-9.562a.548.548.0 0 1 1.031.0zm20.625 9.562 1.578 4.813a1.09 1.09.0 0 1-.391 1.203l-13.563 9.844 12.375-15.859zm0 0h-7.219l3.094-9.562a.548.548.0 0 1 1.031.0z"/></g></symbol><symbol id="icon-google-plus" viewBox="0 0 16 16"><g><path d="M5.091 7.147v1.747h2.888c-.116.75-.872 2.197-2.888 2.197-1.737.0-3.156-1.441-3.156-3.216s1.419-3.216 3.156-3.216c.991.0 1.65.422 2.028.784L8.5 4.112c-.888-.828-2.037-1.331-3.409-1.331C2.275 2.784.0 5.059.0 7.875s2.275 5.091 5.091 5.091c2.937.0 4.888-2.066 4.888-4.975.0-.334-.037-.591-.081-.844H5.092zM16 7h-1.5V5.5H13V7h-1.5v1.5H13V10h1.5V8.5H16z"/></g></symbol><symbol id="icon-instagram" viewBox="0 0 22 22"><g><path d="M15.445.0H6.554A6.559 6.559.0 0 0 0 6.554v8.891A6.559 6.559.0 0 0 6.554 22h8.891a6.56 6.56.0 0 0 6.554-6.555V6.554A6.557 6.557.0 0 0 15.445.0zm4.342 15.445a4.343 4.343.0 0 1-4.342 4.342H6.554a4.341 4.341.0 0 1-4.341-4.342V6.554a4.34 4.34.0 0 1 4.341-4.341h8.891a4.342 4.342.0 0 1 4.341 4.341l.001 8.891z"/><path d="M11 5.312A5.693 5.693.0 0 0 5.312 11 5.694 5.694.0 0 0 11 16.688 5.694 5.694.0 0 0 16.688 11 5.693 5.693.0 0 0 11 5.312zm0 9.163a3.475 3.475.0 1 1-.001-6.95 3.475 3.475.0 0 1 .001 6.95zm5.7-10.484a1.363 1.363.0 1 1-1.364 1.364c0-.752.51-1.364 1.364-1.364z"/></g></symbol><symbol id="icon-linkedin" viewBox="0 0 16 16"><g><path d="M6 6h2.767v1.418h.04C9.192 6.727 10.134 6 11.539 6 14.46 6 15 7.818 15 10.183V15h-2.885v-4.27c0-1.018-.021-2.329-1.5-2.329-1.502.0-1.732 1.109-1.732 2.255V15H6V6zM1 6h3v9H1V6zM4 3.5a1.5 1.5.0 1 1-3.001-.001A1.5 1.5.0 0 1 4 3.5z"/></g></symbol><symbol id="icon-mail" viewBox="0 0 22 18"><g><path fill="#000" d="M0 17.225V.776h22v16.447H0v.002zm3.011-1.815h15.978l-5.111-5.115L11 13.179l-2.877-2.883-5.112 5.114zm-1.216-1.275 5.077-5.09L1.795 3.98v10.155zm13.332-5.09 5.079 5.09V3.979l-5.079 5.066zm-4.126 1.588 8.022-8.027-16.045-.001 8.023 8.028z"/></g></symbol><symbol id="icon-npm" viewBox="0 0 16 16"><g><path d="M0 0v16h16V0H0zm13 13h-2V5H8v8H3V3h10v10z"/></g></symbol><symbol id="icon-pinterest" viewBox="0 0 16 16"><g><path d="M8 1.069a6.93 6.93.0 0 0-2.525 13.384c-.059-.547-.116-1.391.025-1.988.125-.541.813-3.444.813-3.444s-.206-.416-.206-1.028c0-.963.559-1.684 1.253-1.684.591.0.878.444.878.975.0.594-.378 1.484-.575 2.306-.166.691.344 1.253 1.025 1.253 1.231.0 2.178-1.3 2.178-3.175.0-1.659-1.194-2.819-2.894-2.819-1.972.0-3.128 1.478-3.128 3.009.0.597.228 1.234.516 1.581.056.069.066.128.047.2a95.89 95.89.0 0 1-.194.787c-.031.128-.1.153-.231.094-.866-.403-1.406-1.669-1.406-2.684.0-2.188 1.587-4.194 4.578-4.194 2.403.0 4.272 1.712 4.272 4.003.0 2.388-1.506 4.313-3.597 4.313-.703.0-1.362-.366-1.588-.797.0.0-.347 1.322-.431 1.647-.156.603-.578 1.356-.862 1.816a6.93 6.93.0 0 0 8.984-6.622 6.931 6.931.0 0 0-6.931-6.934z"/></g></symbol><symbol id="icon-search" viewBox="0 0 16 16"><g><path d="M15.504 13.616l-3.79-3.223c-.392-.353-.811-.514-1.149-.499a6 6 0 1 0-.672.672c-.016.338.146.757.499 1.149l3.223 3.79c.552.613 1.453.665 2.003.115s.498-1.452-.115-2.003zM6 10a4 4 0 1 1 0-8 4 4 0 0 1 0 8z"/></g></symbol><symbol id="icon-tumblr" viewBox="0 0 16 16"><g><path d="M9.001 7v3.659c0 .928-.012 1.463.086 1.727.098.262.342.534.609.691.354.212.758.318 1.214.318.81.0 1.289-.107 2.09-.633v2.405a9.089 9.089.0 0 1-1.833.639A7.93 7.93.0 0 1 9.369 16a4.9 4.9.0 0 1-1.725-.276 4.195 4.195.0 0 1-1.438-.79c-.398-.343-.672-.706-.826-1.091s-.23-.944-.23-1.676V6.556H3.003V4.29c.628-.204 1.331-.497 1.778-.877a4.386 4.386.0 0 0 1.08-1.374C6.133 1.505 6.32.825 6.422.0h2.579v4H13v3H9.001z"/></g></symbol><symbol id="icon-twitter" viewBox="0 0 16 16"><g><path d="M16 3.538a6.461 6.461.0 0 1-1.884.516 3.301 3.301.0 0 0 1.444-1.816 6.607 6.607.0 0 1-2.084.797 3.28 3.28.0 0 0-2.397-1.034 3.28 3.28.0 0 0-3.197 4.028 9.321 9.321.0 0 1-6.766-3.431 3.284 3.284.0 0 0 1.015 4.381A3.301 3.301.0 0 1 .643 6.57v.041A3.283 3.283.0 0 0 3.277 9.83a3.291 3.291.0 0 1-1.485.057 3.293 3.293.0 0 0 3.066 2.281 6.586 6.586.0 0 1-4.862 1.359 9.286 9.286.0 0 0 5.034 1.475c6.037.0 9.341-5.003 9.341-9.341.0-.144-.003-.284-.009-.425a6.59 6.59.0 0 0 1.637-1.697z"/></g></symbol><symbol id="icon-vimeo" viewBox="0 0 16 16"><g><path d="M15.994 4.281c-.072 1.556-1.159 3.691-3.263 6.397-2.175 2.825-4.016 4.241-5.522 4.241-.931.0-1.722-.859-2.366-2.581-.431-1.578-.859-3.156-1.291-4.734-.478-1.722-.991-2.581-1.541-2.581-.119.0-.538.253-1.256.753l-.753-.969c.791-.694 1.569-1.388 2.334-2.081 1.053-.909 1.844-1.387 2.372-1.438 1.244-.119 2.013.731 2.3 2.553.309 1.966.525 3.188.647 3.666.359 1.631.753 2.447 1.184 2.447.334.0.838-.528 1.509-1.588.669-1.056 1.028-1.862 1.078-2.416.097-.912-.262-1.372-1.078-1.372a2.98 2.98.0 0 0-1.184.263c.787-2.575 2.287-3.825 4.506-3.753 1.641.044 2.416 1.109 2.322 3.194z"/></g></symbol><symbol id="icon-wordpress" viewBox="0 0 16 16"><g><path d="M2 8c0 2.313 1.38 4.312 3.382 5.259L2.52 5.622A5.693 5.693.0 0 0 2 8zm10.05-.295c0-.722-.266-1.222-.495-1.612-.304-.482-.589-.889-.589-1.371.0-.537.418-1.037 1.008-1.037.027.0.052.003.078.005A6.064 6.064.0 0 0 8 2.156 6.036 6.036.0 0 0 2.987 4.79c.141.004.274.007.386.007.627.0 1.599-.074 1.599-.074.323-.018.361.444.038.482.0.0-.325.037-.687.055l2.185 6.33 1.313-3.835-.935-2.495a12.304 12.304.0 0 1-.629-.055c-.323-.019-.285-.5.038-.482.0.0.991.074 1.58.074.627.0 1.599-.074 1.599-.074.323-.018.362.444.038.482.0.0-.326.037-.687.055l2.168 6.282.599-1.947c.259-.809.457-1.389.457-1.889zm-3.945.806-1.8 5.095a6.148 6.148.0 0 0 3.687-.093.52.52.0 0 1-.043-.081L8.105 8.511zm5.16-3.315c.026.186.04.386.04.601.0.593-.114 1.259-.456 2.093l-1.833 5.16c1.784-1.013 2.983-2.895 2.983-5.051a5.697 5.697.0 0 0-.735-2.803zM8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm0 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14z"/></g></symbol><symbol id="icon-youtube" viewBox="0 0 16 16"><g><path d="M15.841 4.8s-.156-1.103-.637-1.587c-.609-.637-1.291-.641-1.603-.678-2.237-.163-5.597-.163-5.597-.163h-.006s-3.359.0-5.597.163c-.313.038-.994.041-1.603.678C.317 3.697.164 4.8.164 4.8S.005 6.094.005 7.391v1.213c0 1.294.159 2.591.159 2.591s.156 1.103.634 1.588c.609.637 1.409.616 1.766.684 1.281.122 5.441.159 5.441.159s3.363-.006 5.6-.166c.313-.037.994-.041 1.603-.678.481-.484.637-1.588.637-1.588s.159-1.294.159-2.591V7.39c-.003-1.294-.162-2.591-.162-2.591zm-9.494 5.275V5.578l4.322 2.256-4.322 2.241z"/></g></symbol></svg><header class=l-header><p class="c-title p-title"><a href=https://optmzr.se/ class=p-title__link>optmzr</a></p><p class=p-subtitle>William Wennerström&#39;s personal web page.</p></header><main id=main class=l-main><article class=p-article><header><h1>Gentoo with DM-Crypt LUKS and EFI</h1><div><div class=c-time>Posted on
+<time datetime=2018-06-16T00:00:00Z>Jun 16, 2018</time></div><a href=https://optmzr.se/tags/gentoo class=c-tag>gentoo</a>
+<a href=https://optmzr.se/tags/os class=c-tag>os</a>
+<a href=https://optmzr.se/tags/encryption class=c-tag>encryption</a></div></header><section id=js-article class=p-article__body><h2 id=what>What?!</h2><p>This article serves as somekind of meta instruction for installing Gentoo with DM-Crypt LUKS. It&rsquo;s my preferred setup with a Gentoo with OpenRC and EFI running on an encrypted harddrive.</p><p>The guide is heavily based upon <a href=https://wiki.gentoo.org/wiki/Sakaki%28s_EFI_Install_Guide>Sakaki&rsquo;s EFI Install Guide</a>.</p><p>If this is your first time installing Gentoo it&rsquo;s probably a better idea to follow <a href=https://wiki.gentoo.org/wiki/Sakaki%28s_EFI_Install_Guide>Sakaki&rsquo;s EFI Install Guide</a>, or follow the <a href=https:/wiki.gentoo.org/wiki/Handbook:AMD64/Full/Installation>Gentoo&rsquo;s Handbook</a></p><h2 id=burn-minimal-installation-cd-to-usb>Burn Minimal Installation CD to USB</h2><p>Download the Minimal Installation CD from: <a href=https://www.gentoo.org/downloads/>https://www.gentoo.org/downloads/</a></p><p>Write the ISO to the USB drive using DD:</p><pre><code>dd if=/path/to/image.iso of=/dev/sdX bs=8192k
+</code></pre><h2 id=boot-and-connect-to-a-network>Boot and connect to a network</h2><p>Either connect a network cable, or connect to a WLAN using:</p><pre><code># Add AP w/ passphrase to config
 wpa_passphrase &quot;ESSID&quot; &gt; /etc/wpa.conf
 &lt;then type your WiFi access point passphrase (without quotes) and press Enter&gt;
 
@@ -109,150 +14,52 @@ ip a
 
 # Connect using WLAN interface
 wpa_supplicant -Dnl80211,wext -i&lt;interface&gt; -c/etc/wpa.conf -B
-</code></pre>
-
-<h2 id="create-gpt-partition-on-main-storage">Create GPT partition on main storage</h2>
-
-<p>Find the main storage drive using:</p>
-
-<pre><code>lsblk
-</code></pre>
-
-<p>Run <code>parted</code> to create the GPT partition:</p>
-
-<pre><code>parted -a optimal /dev/sdX
-</code></pre>
-
-<p>Inside parted issue:</p>
-
-<pre><code>(parted) unit mib
+</code></pre><h2 id=create-gpt-partition-on-main-storage>Create GPT partition on main storage</h2><p>Find the main storage drive using:</p><pre><code>lsblk
+</code></pre><p>Run <code>parted</code> to create the GPT partition:</p><pre><code>parted -a optimal /dev/sdX
+</code></pre><p>Inside parted issue:</p><pre><code>(parted) unit mib
 (parted) mklabel gpt
 (parted) mkpart boot fat32 1 251
 (parted) set 1 boot on
 (parted) mkpart root 251 -1
 (parted) print
 (parted) quit
-</code></pre>
-
-<p>Make sure everything is correct:</p>
-
-<pre><code>lsblk
-</code></pre>
-
-<p>Overwrite the partitions with pseudo-random data (if you&rsquo;re paranoid):</p>
-
-<pre><code>dd if=/dev/urandom of=/dev/sdX{1..3} bs=1M
-</code></pre>
-
-<h2 id="format-main-parition-with-luks">Format main parition with LUKS</h2>
-
-<p>Let <code>cryptsetup</code> format <code>/dev/sdX3</code> as a LUKS partition:</p>
-
-<pre><code>cryptsetup --key-size 512 --hash sha512 luksFormat /dev/sdX2
-</code></pre>
-
-<p>Verify everything went well:</p>
-
-<pre><code>cryptsetup luksDump /dev/sdX2
-</code></pre>
-
-<p>Open LUKS partition:</p>
-
-<pre><code>cryptsetup luksOpen /dev/sdX2 root
-</code></pre>
-
-<p>Format root:</p>
-
-<pre><code>mkfs.ext4 -L &quot;root&quot; /dev/mapper/root
-</code></pre>
-
-<p>Format efi/boot:</p>
-
-<pre><code>mkfs.vfat -F32 /dev/sdX1
-</code></pre>
-
-<p>Mount root directory at pre-existing <code>/mnt/gentoo</code> mountpoint:</p>
-
-<pre><code>mount -t ext4 /dev/mapper/root /mnt/gentoo
-</code></pre>
-
-<p>Create needed directories in root:</p>
-
-<pre><code>mkdir /mnt/gentoo/{home,boot,boot/efi}
-</code></pre>
-
-<h2 id="check-date-and-time">Check date and time</h2>
-
-<p>Make sure the time is correct:</p>
-
-<pre><code>date
-</code></pre>
-
-<h2 id="fetch-and-unpack-the-gentoo-stage-3-tarball">Fetch and unpack the Gentoo Stage 3 Tarball:</h2>
-
-<p>Change to the root mountpoint:</p>
-
-<pre><code>cd /mnt/gentoo
-</code></pre>
-
-<p>Download the latest Stage 3 files:</p>
-
-<pre><code>links http://distfiles.gentoo.org/
-</code></pre>
-
-<p>Look for (find the files where YYYYMMDD is the latest date):</p>
-
-<pre><code>/releases/amd64/autobuilds/current-stage3-amd64/stage3-amd64-YYYYMMDD.tar.xz
+</code></pre><p>Make sure everything is correct:</p><pre><code>lsblk
+</code></pre><p>Overwrite the partitions with pseudo-random data (if you&rsquo;re paranoid):</p><pre><code>dd if=/dev/urandom of=/dev/sdX{1..3} bs=1M
+</code></pre><h2 id=format-main-parition-with-luks>Format main parition with LUKS</h2><p>Let <code>cryptsetup</code> format <code>/dev/sdX3</code> as a LUKS partition:</p><pre><code>cryptsetup --key-size 512 --hash sha512 luksFormat /dev/sdX2
+</code></pre><p>Verify everything went well:</p><pre><code>cryptsetup luksDump /dev/sdX2
+</code></pre><p>Open LUKS partition:</p><pre><code>cryptsetup luksOpen /dev/sdX2 root
+</code></pre><p>Format root:</p><pre><code>mkfs.ext4 -L &quot;root&quot; /dev/mapper/root
+</code></pre><p>Format efi/boot:</p><pre><code>mkfs.vfat -F32 /dev/sdX1
+</code></pre><p>Mount root directory at pre-existing <code>/mnt/gentoo</code> mountpoint:</p><pre><code>mount -t ext4 /dev/mapper/root /mnt/gentoo
+</code></pre><p>Create needed directories in root:</p><pre><code>mkdir /mnt/gentoo/{home,boot,boot/efi}
+</code></pre><h2 id=check-date-and-time>Check date and time</h2><p>Make sure the time is correct:</p><pre><code>date
+</code></pre><h2 id=fetch-and-unpack-the-gentoo-stage-3-tarball>Fetch and unpack the Gentoo Stage 3 Tarball:</h2><p>Change to the root mountpoint:</p><pre><code>cd /mnt/gentoo
+</code></pre><p>Download the latest Stage 3 files:</p><pre><code>links http://distfiles.gentoo.org/
+</code></pre><p>Look for (find the files where YYYYMMDD is the latest date):</p><pre><code>/releases/amd64/autobuilds/current-stage3-amd64/stage3-amd64-YYYYMMDD.tar.xz
 /releases/amd64/autobuilds/current-stage3-amd64/stage3-amd64-YYYYMMDD.tar.xz.CONTENTS
 /releases/amd64/autobuilds/current-stage3-amd64/stage3-amd64-YYYYMMDD.tar.xz.DIGESTS.asc
-</code></pre>
-
-<p>Retrieve the public key:</p>
-
-<pre><code>gpg --recv-keys 0x9E6438C817072058
-</code></pre>
-
-<p>Verify the cryptographic signature:</p>
-
-<pre><code>gpg --verify stage3-amd64-*.DIGESTS.asc
-</code></pre>
-
-<p>Check the digests:</p>
-
-<pre><code>awk '/SHA512 HASH/{getline;print}' stage3-amd64-*.DIGESTS.asc | sha512sum -- check
-</code></pre>
-
-<p>Double check you&rsquo;re in the <code>/mnt/gentoo</code> directory, then issue:</p>
-
-<pre><code>tar xvJpf stage3-amd64-*.tar.xz --xattrs-include='*.*' --numeric-owner
-</code></pre>
-
-<p>Remove the Stage 3 files:</p>
-
-<pre><code>rm stage3-amd64-*
-</code></pre>
-
-<p>Return home:</p>
-
-<pre><code>cd
-</code></pre>
-
-<h2 id="setup-portage">Setup Portage</h2>
-
-<p>Edit the <code>/mnt/gentoo/etc/portage/make.conf</code> file (modify for your computer):</p>
-
-<pre><code># The holy USE
-USE=&quot;device-mapper&quot;
+</code></pre><p>Retrieve the public key:</p><pre><code>gpg --recv-keys 0x9E6438C817072058
+</code></pre><p>Verify the cryptographic signature:</p><pre><code>gpg --verify stage3-amd64-*.DIGESTS.asc
+</code></pre><p>Check the digests:</p><pre><code>awk '/SHA512 HASH/{getline;print}' stage3-amd64-*.DIGESTS.asc | sha512sum -- check
+</code></pre><p>Double check you&rsquo;re in the <code>/mnt/gentoo</code> directory, then issue:</p><pre><code>tar xvJpf stage3-amd64-*.tar.xz --xattrs-include='*.*' --numeric-owner
+</code></pre><p>Remove the Stage 3 files:</p><pre><code>rm stage3-amd64-*
+</code></pre><p>Return home:</p><pre><code>cd
+</code></pre><h2 id=setup-portage>Setup Portage</h2><p>Edit the <code>/mnt/gentoo/etc/portage/make.conf</code> file (modify for your computer):</p><pre><code># The holy USE
+# Modify to fit your preferences.
+USE=&quot;unicode savedconfig offensive alsa zsh-completion dmenu&quot;
 
 # C and C++ compiler options for GCC.
 CFLAGS=&quot;-march=native -O2 -pipe&quot;
 CXXFLAGS=&quot;${CFLAGS}&quot;
-MAKEOPTS=&quot;-j4&quot; # 4 threads per job
-EMERGE_DEFAULT_OPTS=&quot;--jobs 2 --load-average 7.2&quot; # 2 parallel jobs, at 8*0.9 load (90 % load on all cores)
+
+# Threads and jobs for my PC, with 16 threads.
+MAKEOPTS=&quot;-j8&quot; # 8 threads per job
+EMERGE_DEFAULT_OPTS=&quot;--jobs 2 --load-average 14.4&quot; # 2 parallel jobs, at 16*0.9 load (90 % load on all cores)
+
 CPU_FLAGS_X86=&quot;aes avx f16c mmx mmxext pclmul popcnt sse sse2 sse3 sse4_1 sse4_2 ssse3&quot; # check w/ cpuid2cpuflags
 
 # Only free software, please.
-ACCEPT_LICENSE=&quot;-* @FREE CC-Sampling-Plus-1.0&quot;
+ACCEPT_LICENSE=&quot;-* @FREE&quot;
 
 # WARNING: Changing your CHOST is not something that should be done lightly.
 # Please consult http://www.gentoo.org/doc/en/change-chost.xml before changing.
@@ -281,192 +88,58 @@ FEATURES=&quot;split-elog buildpkg&quot;
 
 # Settings for X11 (make sure these are correct for your hardware).
 VIDEO_CARDS=&quot;intel i965&quot;
-INPUT_DEVICES=&quot;evdev synaptics&quot;
-</code></pre>
-
-<h2 id="prepare-and-enter-chroot">Prepare and enter <code>chroot</code></h2>
-
-<p>Select the correct mirror for your location:</p>
-
-<pre><code>mirrorselect -i -o &gt;&gt; /mnt/gentoo/etc/portage/make.conf
-</code></pre>
-
-<p>Setup <code>/mnt/gentoo/etc/portage/repos.conf</code> directory:</p>
-
-<pre><code>mkdir -p /mnt/gentoo/etc/portage/repos.conf
+INPUT_DEVICES=&quot;libinput&quot;
+</code></pre><h2 id=prepare-and-enter-chroot>Prepare and enter <code>chroot</code></h2><p>Select the correct mirror for your location:</p><pre><code>mirrorselect -i -o &gt;&gt; /mnt/gentoo/etc/portage/make.conf
+</code></pre><p>Setup <code>/mnt/gentoo/etc/portage/repos.conf</code> directory:</p><pre><code>mkdir -p /mnt/gentoo/etc/portage/repos.conf
 cp /mnt/gentoo/usr/share/portage/config/repos.conf /mnt/gentoo/etc/portage/repos.conf/gentoo.conf
-</code></pre>
-
-<p>Copy resolv.conf so DNS works in <code>chroot</code>:</p>
-
-<pre><code>cp -L /etc/resolv.conf /mnt/gentoo/etc/
-</code></pre>
-
-<p>If we&rsquo;re using WLAN, also run:</p>
-
-<pre><code>cp /etc/wpa.conf /mnt/gentoo/etc/
-</code></pre>
-
-<p>Mount <code>/proc</code>, <code>/sys</code> and <code>/dev</code>:</p>
-
-<pre><code>mount -t proc none /mnt/gentoo/proc
+</code></pre><p>Copy resolv.conf so DNS works in <code>chroot</code>:</p><pre><code>cp -L /etc/resolv.conf /mnt/gentoo/etc/
+</code></pre><p>If we&rsquo;re using WLAN, also run:</p><pre><code>cp /etc/wpa.conf /mnt/gentoo/etc/
+</code></pre><p>Mount <code>/proc</code>, <code>/sys</code> and <code>/dev</code>:</p><pre><code>mount -t proc none /mnt/gentoo/proc
 mount --rbind /sys /mnt/gentoo/sys
 mount --rbind /dev /mnt/gentoo/dev
 mount --make-rslave /mnt/gentoo/sys
 mount --make-rslave /mnt/gentoo/dev
-</code></pre>
-
-<p>Enter <code>chroot</code>:</p>
-
-<pre><code>chroot /mnt/gentoo /bin/bash
+</code></pre><p>Enter <code>chroot</code>:</p><pre><code>chroot /mnt/gentoo /bin/bash
 source /etc/profile
 export PS1=&quot;(chroot) $PS1&quot;
-</code></pre>
-
-<h2 id="install-the-portage-tree">Install the Portage Tree</h2>
-
-<p>Install the latest Portage repository tree snapshot (it&rsquo;ll create all directories it&rsquo;s complaining about):</p>
-
-<pre><code>(chroot) emerge-webrsync
-</code></pre>
-
-<p>Update the Portage tree:</p>
-
-<pre><code>(chroot) emerge --sync
-</code></pre>
-
-<p>Make sure the Portage package is up-to-date:</p>
-
-<pre><code>(chroot) emerge --ask --verbose --oneshot portage
-</code></pre>
-
-<p>Check which baseline profile to use:</p>
-
-<pre><code>(chroot) eselect profile list
-</code></pre>
-
-<p>Select the correct profile (change <code>1</code> to the correct one):</p>
-
-<pre><code>(chroot) eselect profile set 1
-</code></pre>
-
-<p>Make a sanity check of the profile, <code>make.conf</code>, enviroment etc.:</p>
-
-<pre><code>(chroot) emerge --info
-</code></pre>
-
-<h2 id="setup-timezone-and-locale">Setup timezone and locale</h2>
-
-<p>Check for your timezone:</p>
-
-<pre><code>(chroot) ls /usr/share/zoneinfo
-</code></pre>
-
-<p>Set the timezone:</p>
-
-<pre><code>(chroot) echo &quot;Europe/Stockholm&quot; &gt; /etc/timezone
-</code></pre>
-
-<p>Reconfigure the <code>sys-libs/timezone-data</code> package so it picks up the new timezone:</p>
-
-<pre><code>(chroot) emerge --config sys-libs/timezone-data
-</code></pre>
-
-<p>Set the locale by uncommenting the correct ones in <code>/etc/locale.gen</code>, in my case:</p>
-
-<pre><code>en_US.UTF-8 UTF-8
-</code></pre>
-
-<p>Generate the new locales:</p>
-
-<pre><code>(chroot) locale-gen
-</code></pre>
-
-<p>Find the number for the locale:</p>
-
-<pre><code>(chroot) eselect locale list
-</code></pre>
-
-<p>Set the locale to the <code>C</code> locale (we&rsquo;ll change to the actual later):</p>
-
-<pre><code>(chroot) eselect locale set 1
-</code></pre>
-
-<p>Reload the enviroment:</p>
-
-<pre><code>(chroot) env-update &amp;&amp; source /etc/profile &amp;&amp; export PS1=&quot;(chroot) $PS1&quot;
-</code></pre>
-
-<p>Find the correct key map:</p>
-
-<pre><code>(chroot) ls /usr/share/keymaps/i386/qwerty
-</code></pre>
-
-<p>Choose the correct one (strip out<code>.map.gz</code>) and edit <code>/etc/conf.d/keymaps</code>:</p>
-
-<pre><code>keymap=&quot;sv-latin1&quot;
-</code></pre>
-
-<h2 id="some-minor-fixes-optional">Some minor fixes (optional)</h2>
-
-<p>If you want to use LibreSSL instead of OpenSSL follow the guide here:
-<a href="https://wiki.gentoo.org/wiki/Project:LibreSSL">https://wiki.gentoo.org/wiki/Project:LibreSSL</a></p>
-
-<h2 id="create-directories-for-package-use-package-mask-etc">Create directories for package.use, package.mask, etc.:</h2>
-
-<pre><code>(chroot) mkdir -p -v /etc/portage/package.use
+</code></pre><h2 id=install-the-portage-tree>Install the Portage Tree</h2><p>Install the latest Portage repository tree snapshot (it&rsquo;ll create all directories it&rsquo;s complaining about):</p><pre><code>(chroot) emerge-webrsync
+</code></pre><p>Update the Portage tree:</p><pre><code>(chroot) emerge --sync
+</code></pre><p>Make sure the Portage package is up-to-date:</p><pre><code>(chroot) emerge --ask --verbose --oneshot portage
+</code></pre><p>Check which baseline profile to use:</p><pre><code>(chroot) eselect profile list
+</code></pre><p>Select the correct profile (change <code>1</code> to the correct one):</p><pre><code>(chroot) eselect profile set 1
+</code></pre><p>Make a sanity check of the profile, <code>make.conf</code>, enviroment etc.:</p><pre><code>(chroot) emerge --info
+</code></pre><h2 id=setup-timezone-and-locale>Setup timezone and locale</h2><p>Check for your timezone:</p><pre><code>(chroot) ls /usr/share/zoneinfo
+</code></pre><p>Set the timezone:</p><pre><code>(chroot) echo &quot;Europe/Stockholm&quot; &gt; /etc/timezone
+</code></pre><p>Reconfigure the <code>sys-libs/timezone-data</code> package so it picks up the new timezone:</p><pre><code>(chroot) emerge --config sys-libs/timezone-data
+</code></pre><p>Set the locale by uncommenting the correct ones in <code>/etc/locale.gen</code>, in my case:</p><pre><code>en_US.UTF-8 UTF-8
+</code></pre><p>Generate the new locales:</p><pre><code>(chroot) locale-gen
+</code></pre><p>Find the number for the locale:</p><pre><code>(chroot) eselect locale list
+</code></pre><p>Set the locale to the <code>C</code> locale (we&rsquo;ll change to the actual later):</p><pre><code>(chroot) eselect locale set 1
+</code></pre><p>Reload the enviroment:</p><pre><code>(chroot) env-update &amp;&amp; source /etc/profile &amp;&amp; export PS1=&quot;(chroot) $PS1&quot;
+</code></pre><p>Find the correct key map:</p><pre><code>(chroot) ls /usr/share/keymaps/i386/qwerty
+</code></pre><p>Choose the correct one (strip out<code>.map.gz</code>) and edit <code>/etc/conf.d/keymaps</code>:</p><pre><code>keymap=&quot;sv-latin1&quot;
+</code></pre><h2 id=some-minor-fixes-optional>Some minor fixes (optional)</h2><p>If you want to use LibreSSL instead of OpenSSL follow the guide here:
+<a href=https://wiki.gentoo.org/wiki/Project:LibreSSL>https://wiki.gentoo.org/wiki/Project:LibreSSL</a></p><h2 id=create-directories-for-package-use-package-mask-etc>Create directories for package.use, package.mask, etc.:</h2><pre><code>(chroot) mkdir -p -v /etc/portage/package.use
 (chroot) touch /etc/portage/package.use/zzz_via_autounmask
 (chroot) mkdir -p -v /etc/portage/package.mask
 (chroot) mkdir -p -v /etc/portage/package.unmask
 (chroot) touch /etc/portage/package.unmask/zzz_via_autounmask
 (chroot) mkdir -p -v /etc/portage/package.accept_keywords
 (chroot) touch /etc/portage/package.accept_keywords/zzz_via_autounmask
-</code></pre>
-
-<h2 id="finally-make-sure-system-is-up-to-date">Finally, make sure system is up-to-date</h2>
-
-<p>Update <code>@world</code>:</p>
-
-<pre><code>(chroot) emerge --ask --verbose --deep --with-bdeps=y --newuse --update @world
-</code></pre>
-
-<p>Make sure everything is configured correctly:</p>
-
-<pre><code>(chroot) dispatch-conf
-</code></pre>
-
-<h2 id="build-the-linux-kernel">Build the Linux kernel</h2>
-
-<p>Permit licenses needed to build kernel:</p>
-
-<pre><code>(chroot) mkdir -p -v /etc/portage/package.license
+</code></pre><h2 id=finally-make-sure-system-is-up-to-date>Finally, make sure system is up-to-date</h2><p>Update <code>@world</code>:</p><pre><code>(chroot) emerge --ask --verbose --deep --with-bdeps=y --newuse --update @world
+</code></pre><p>Make sure everything is configured correctly:</p><pre><code>(chroot) dispatch-conf
+</code></pre><h2 id=build-the-linux-kernel>Build the Linux kernel</h2><p>Permit licenses needed to build kernel:</p><pre><code>(chroot) mkdir -p -v /etc/portage/package.license
 (chroot) touch /etc/portage/package.license/zzz_via_autounmask
 (chroot) echo &quot;sys-kernel/gentoo-sources freedist&quot; &gt;&gt; /etc/portage/package.license/gentoo-sources
 (chroot) echo &quot;sys-kernel/linux-firmware freedist&quot; &gt;&gt; /etc/portage/package.license/linux-firmware
-</code></pre>
-
-<p>Fetch the kernel sources and firmware:</p>
-
-<pre><code>(chroot) emerge --ask --verbose sys-kernel/gentoo-sources
+</code></pre><p>Fetch the kernel sources and firmware:</p><pre><code>(chroot) emerge --ask --verbose sys-kernel/gentoo-sources
 (chroot) emerge --ask --verbose sys-kernel/linux-firmware
-</code></pre>
-
-<p>Make sure <code>/usr/src/linux</code> points to current kernel version:</p>
-
-<pre><code>(chroot) readlink -v /usr/src/linux
+</code></pre><p>Make sure <code>/usr/src/linux</code> points to current kernel version:</p><pre><code>(chroot) readlink -v /usr/src/linux
 (chroot) eselect kernel list
-</code></pre>
-
-<p>Move to the <code>/usr/src/linux</code> directory, and run <code>make menuconfig</code> to configure
-the kernel:</p>
-
-<pre><code>(chroot) cd /usr/src/linux
+</code></pre><p>Move to the <code>/usr/src/linux</code> directory, and run <code>make menuconfig</code> to configure
+the kernel:</p><pre><code>(chroot) cd /usr/src/linux
 (chroot) make menuconfig
-</code></pre>
-
-<p>Configure the kernel:</p>
-
-<pre><code>General setup &gt; [*] Initial RAM filesystem and RAM disk (initramfs/initrd) support
+</code></pre><p>Configure the kernel:</p><pre><code>General setup &gt; [*] Initial RAM filesystem and RAM disk (initramfs/initrd) support
 General setup &gt; Initial RAM filesystem and RAM disk (initramfs/initrd) support &gt; Initramfs source file(s) (/usr/src/initramfs)
 
 Enable the block layer &gt; Partition Types &gt; [*]   EFI GUID Partition support
@@ -498,12 +171,8 @@ Cryptographic API &gt; &lt;*&gt; AES cipher algorithms (AES-NI)
 
 Cryptographic API &gt; &lt;*&gt; User-space interface for hash algorithms
 Cryptographic API &gt; &lt;*&gt; User-space interface for symmetric key cipher algorithms
-</code></pre>
-
-<p>Add required USE-flags for initramfs in <code>/etc/portage/package.use/initramfs</code>:</p>
-
-<pre><code>sys-apps/busybox static
-sys-fs/cryptsetup static -gcrypt kernel
+</code></pre><p>Add required USE-flags for initramfs in <code>/etc/portage/package.use/initramfs</code>:</p><pre><code>sys-apps/busybox static
+sys-fs/cryptsetup static kernel -gcrypt -openssl
 
 # Sadly, we need lvm for cryptsetup to work...
 # required by sys-fs/cryptsetup-1.7.5::gentoo[static,-static-libs]
@@ -527,26 +196,14 @@ sys-fs/cryptsetup static -gcrypt kernel
 # required by sys-fs/cryptsetup-1.7.5::gentoo[static,-static-libs]
 # required by cryptsetup (argument)
 &gt;=sys-fs/eudev-3.2.5 static-libs
-</code></pre>
-
-<p>Install <code>busybox</code> and <code>cryptsetup</code>:</p>
-
-<pre><code>(chroot) emerge -av sys-fs/cryptsetup sys-apps/busybox
-</code></pre>
-
-<p>Create initramfs:</p>
-
-<pre><code>(chroot) mkdir -p /usr/src/initramfs/{bin,dev,etc,lib,lib64,mnt/root,proc,root,sbin,sys,usr/sbin,usr/bin}
+</code></pre><p>Install <code>busybox</code> and <code>cryptsetup</code>:</p><pre><code>(chroot) emerge -av sys-fs/cryptsetup sys-apps/busybox
+</code></pre><p>Create initramfs:</p><pre><code>(chroot) mkdir -p /usr/src/initramfs/{bin,dev,etc,lib,lib64,mnt/root,proc,root,sbin,sys,usr/sbin,usr/bin}
 (chroot) cp -a /dev/{null,console,tty,sdX1,sdX2} /usr/src/initramfs/dev/ # Replace X with correct drive letter.
 (chroot) cp -a /dev/{urandom,random} /usr/src/initramfs/dev
 (chroot) cp -a /sbin/cryptsetup /usr/src/initramfs/sbin/cryptsetup
 (chroot) cp -a /bin/busybox /usr/src/initramfs/bin/busybox
 (chroot) chroot /usr/src/initramfs /bin/busybox --install -s
-</code></pre>
-
-<p>Create <code>/usr/src/initramfs/init</code> with the following content (NOTE: update to correct drive letters):</p>
-
-<pre><code>#!/bin/busybox sh
+</code></pre><p>Create <code>/usr/src/initramfs/init</code> with the following content (NOTE: update to correct drive letters):</p><pre><code>#!/bin/busybox sh
 
 die() {
 	echo &quot;Something went wrong. Dropping to a shell.&quot;
@@ -556,8 +213,6 @@ die() {
 # Mount the /proc and /sys filesystems.
 mount -t proc none /proc
 mount -t sysfs none /sys
-
-echo &quot;Welcome, dear Sir King Lord William the First...&quot;
 
 # Open encrypted partition, and place at /dev/mapper/root.
 # NOTE: Update drive letter below.
@@ -571,67 +226,21 @@ umount /sys
 
 # Switch to real root.
 exec switch_root /mnt/root /sbin/init || die
-</code></pre>
-
-<h2 id="make-init-executable">Make <code>init</code> executable:</h2>
-
-<pre><code>(chroot) chmod +x /usr/src/initramfs/init
-</code></pre>
-
-<p>Make sure we don&rsquo;t compile in an old initramfs:</p>
-
-<pre><code>(chroot) rm /usr/src/linux/usr/initramfs_data.cpio*
-</code></pre>
-
-<p>Build and install the kernel:</p>
-
-<pre><code>(chroot) make &amp;&amp; make modules_install
-</code></pre>
-
-<p>Mount the boot partition (NOTE: Update drive letter):</p>
-
-<pre><code>(chroot) mount /dev/sdX1 /boot
-</code></pre>
-
-<p>Manually copy the kernel to the default EFI boot location:</p>
-
-<pre><code>(chroot) mkdir -p /boot/EFI/Boot
+</code></pre><h2 id=make-init-executable>Make <code>init</code> executable:</h2><pre><code>(chroot) chmod +x /usr/src/initramfs/init
+</code></pre><p>Make sure we don&rsquo;t compile in an old initramfs:</p><pre><code>(chroot) rm /usr/src/linux/usr/initramfs_data.cpio*
+</code></pre><p>Build and install the kernel:</p><pre><code>(chroot) make &amp;&amp; make modules_install
+</code></pre><p>Mount the boot partition (NOTE: Update drive letter):</p><pre><code>(chroot) mount /dev/sdX1 /boot
+</code></pre><p>Manually copy the kernel to the default EFI boot location:</p><pre><code>(chroot) mkdir -p /boot/EFI/Boot
 (chroot) cp /usr/src/linux/arch/x86_64/boot/bzImage /boot/EFI/Boot/bootx64.efi
-</code></pre>
-
-<p>Add <code>root</code> filesystem to <code>/etc/fstab</code>:</p>
-
-<pre><code>(chroot) echo &quot;/dev/mapper/root / ext4 defaults,noatime,errors=remount-ro,discard   0 1&quot; &gt;&gt; /etc/fstab
-</code></pre>
-
-<p>Install some usefull utilities before reboot:</p>
-
-<pre><code>(chroot) emerge -a net-misc/dhcpcd app-misc/screen
+</code></pre><p>Add <code>root</code> filesystem to <code>/etc/fstab</code>:</p><pre><code>(chroot) echo &quot;/dev/mapper/root / ext4 defaults,noatime,errors=remount-ro,discard   0 1&quot; &gt;&gt; /etc/fstab
+</code></pre><p>Install some usefull utilities before reboot:</p><pre><code>(chroot) emerge -a net-misc/dhcpcd app-misc/screen
 (chroot) emerge -a net-wireless/wpa_supplicant # If you use WiFi.
-</code></pre>
-
-<p>Set the root password:</p>
-
-<pre><code>(chroot) passwd root
-</code></pre>
-
-<p>Set the hostname:</p>
-
-<pre><code>(chroot) echo -n &quot;myWonderfulComputer&quot; &gt; /etc/hostname
-</code></pre>
-
-<p>Reboot:</p>
-
-<pre><code>(chroot) exit
+</code></pre><p>Set the root password:</p><pre><code>(chroot) passwd root
+</code></pre><p>Set the hostname:</p><pre><code>(chroot) echo -n &quot;myWonderfulComputer&quot; &gt; /etc/hostname
+</code></pre><p>Reboot:</p><pre><code>(chroot) exit
 reboot # When you lose the connection, press: &lt;Enter&gt;, then '~', then '.'.
-</code></pre>
-
-<h2 id="what-if-something-went-wrong">What if something went wrong?!</h2>
-
-<p>If the something goes wrong during boot, boot using the USB with the minimal
-install and enter the <code>chroot</code> again with:</p>
-
-<pre><code>cryptsetup luksOpen /dev/sdX2 root
+</code></pre><h2 id=what-if-something-went-wrong>What if something went wrong?!</h2><p>If the something goes wrong during boot, boot using the USB with the minimal
+install and enter the <code>chroot</code> again with:</p><pre><code>cryptsetup luksOpen /dev/sdX2 root
 mount -t ext4 /dev/mapper/root /mnt/gentoo
 mount -t proc none /mnt/gentoo/proc
 mount --rbind /sys /mnt/gentoo/sys
@@ -641,283 +250,126 @@ mount --make-rslave /mnt/gentoo/dev
 chroot /mnt/gentoo /bin/bash
 source /etc/profile
 export PS1=&quot;(chroot) $PS1&quot;
-</code></pre>
-
-<h2 id="add-user">Add user</h2>
-
-<p>Now, when you&rsquo;ve succesfully booted into your new system, login as root and
-create a new user that can use <code>sudo</code>:</p>
-
-<pre><code>emerge -a app-admin/sudo
-useradd -m -G users,wheel,audio,video -s /bin/bash willeponken # Change to your username.
-passwd willeponken # You'll get prompted to set the users password.
-</code></pre>
-
-<p>Enter <code>visudo</code> and uncomment the <code># %wheel ALL=(ALL) NOPASSWD: ALL</code> block:</p>
-
-<pre><code>visudo # Uncomment the block, and save and exit.
-</code></pre>
-
-<h2 id="install-my-favorite-portage-set">Install my favorite Portage set</h2>
-
-<p>Below you have my favorites, it contains a X11 environment running <code>dwm</code>. Add it
-to <code>/etc/portage/sets/favorites</code>:</p>
-
-<pre><code>app-admin/pass
-app-admin/stow
-app-admin/sudo
-app-arch/rar
-app-arch/unrar
-app-arch/unzip
-app-arch/zip
-app-backup/restic
-app-editors/neovim
+</code></pre><h2 id=add-user>Add user</h2><p>Now, when you&rsquo;ve succesfully booted into your new system, login as root and
+create a new user that can use <code>sudo</code>:</p><pre><code>emerge -a app-admin/sudo
+useradd -m -G users,wheel,audio,video -s /bin/bash optmzr # Change to your username.
+passwd optmzr # You'll get prompted to set the users password.
+</code></pre><p>Enter <code>visudo</code> and uncomment the <code># %wheel ALL=(ALL) NOPASSWD: ALL</code> block:</p><pre><code>visudo # Uncomment the block, and save and exit.
+</code></pre><h2 id=install-my-favorite-portage-set>Install my favorite Portage set</h2><p>Below you have my favorites, it contains a X11 environment running <code>dwm</code>. Add it
+to <code>/etc/portage/sets/favorites</code>:</p><pre><code># Portage
 app-eselect/eselect-repository
-app-eselect/eselect-vi
-app-misc/screen
 app-portage/cpuid2cpuflags
 app-portage/eix
-app-portage/elogv
-app-portage/gentoolkit
 app-portage/repoman
-app-shells/gentoo-zsh-completions
+app-portage/gentoolkit
+
+# ZSH
 app-shells/zsh
 app-shells/zsh-completions
+app-shells/gentoo-zsh-completions
+
+# Mutt
 app-text/antiword
 app-text/extract_url
 app-text/mupdf
-app-text/poppler
-app-text/tree
-app-vim/gentoo-syntax
-dev-lang/go
+mail-client/mutt
+media-libs/exiftool
+
+# Neovim
+app-editors/neovim
+media-fonts/powerline-symbols
+
+# Python
 dev-python/pip
 dev-python/virtualenv
+
+# C
 dev-util/ctags
 dev-util/strace
+
+# Git
 dev-vcs/git
 dev-vcs/git-lfs
-mail-client/mutt
-mail-mta/msmtp
-media-fonts/powerline-symbols
+
+# Go
+dev-lang/go
+
+# Backup
+sys-process/cronie
+app-backup/restic
+
+# Remote
+net-misc/mosh
+
+# Connectivity
+net-misc/dhcpcd
+net-wireless/wpa_supplicant
+net-vpn/openvpn
+
+# Powersave
+sys-apps/hprofile
+
+# Time
+net-misc/chrony
+
+# Tools
+app-admin/pass
+app-admin/stow
+app-admin/sudo
+app-arch/unzip
+app-arch/zip
+app-misc/screen
+app-text/tree
 media-gfx/feh
-media-gfx/gimp
-media-gfx/graphviz
 media-gfx/scrot
-media-libs/exiftool
-media-libs/imlib2
-media-sound/alsa-utils
 media-video/ffmpeg
-media-video/mpv
+media-sound/alsa-utils
 net-analyzer/nethogs
-net-analyzer/openbsd-netcat
 net-analyzer/tcpdump
 net-analyzer/traceroute
 net-dns/bind-tools
-net-dns/openresolv
-net-misc/chrony
-net-misc/dhcpcd
-net-misc/mosh
-net-misc/youtube-dl
-net-vpn/openvpn
-sys-apps/exa
-sys-apps/haveged
-sys-apps/hprofile
-sys-apps/mlocate
 sys-apps/pciutils
+net-misc/youtube-dl
+sys-apps/mlocate
 sys-apps/ripgrep
-sys-devel/gcc
-sys-fs/cryptsetup
-sys-fs/ncdu
-sys-kernel/gentoo-sources
-sys-kernel/linux-firmware
-sys-power/suspend
-sys-process/cronie
 sys-process/htop
-www-client/firefox
 www-client/lynx
-www-client/surf
-x11-apps/setxkbmap
-x11-apps/xbacklight
-x11-apps/xev
-x11-apps/xfd
-x11-apps/xhost
-x11-apps/xlsfonts
-x11-apps/xmodmap
-x11-apps/xrandr
-x11-apps/xwininfo
+
+# Sound
+media-libs/alsa-lib
+
+# X11 system
 x11-base/xorg-drivers
 x11-base/xorg-server
-x11-libs/gtk+
+x11-wm/dwm
+
+# X11 apps
+x11-apps/xprop
 x11-misc/dmenu
 x11-misc/slock
 x11-misc/slstatus
 x11-misc/tabbed
+x11-terms/st
+www-client/surf
+
+# X11 tools
 x11-misc/unclutter
 x11-misc/wmname
 x11-misc/xssstate
-x11-terms/st
-x11-wm/dwm
-</code></pre>
+x11-apps/setxkbmap
+x11-apps/xbacklight
+x11-apps/xev
+x11-apps/xmodmap
+x11-apps/xrandr
+x11-misc/xclip
 
-<p>Before emerging, you have to add the <code>drkhsh</code> overlay (where <code>slstatus</code> resides).
+# Misc
+sys-apps/haveged
+</code></pre><p>Before emerging, you have to add the <code>drkhsh</code> overlay (where <code>slstatus</code> resides).
 Begin by installing <code>app-eselect/eselect-repository</code> and <code>dev-vcs/git</code> so you
-can use third-party <code>git</code> overlays:</p>
-
-<pre><code>emerge -a app-eselect/eselect-repository dev-vcs/git
-</code></pre>
-
-<p>Then, add the <code>drkhsh</code> (and my own, heh) overlay:</p>
-
-<pre><code>eselect repository add drkhsh-overlay git https://github.com/drkhsh/overlay.git
-eselect repository add willeponken git https://github.com/willeponken/gentoo-overlay.git
-</code></pre>
-
-<p>Syncronize the overlays with Portage:</p>
-
-<pre><code>emerge --sync
-</code></pre>
-
-<p>And install all packages in the <code>@favorites</code> set with:</p>
-
-<pre><code>emerge -a @favorites
-</code></pre>
-
-  </section>
-  <footer>
-    
-    <nav class="p-pagination c-pagination">
-      <div class="c-pagination__ctrl">
-        <div class="c-pagination__newer">
-          
-          <a href="https://optmzr.se/about/">Newer</a>
-          
-        </div>
-        <div class="c-pagination__older">
-          
-          
-        </div>
-      </div>
-    </nav>
-    
-
-
-    
-<aside class="p-author">
-  
-  <div class="c-avatar p-author__avatar">
-    <img alt="Author Avatar" src="/images/avatar.jpg" />
-  </div>
-  
-  
-  <div class="p-author__body">
-    
-    <p class="c-title p-author__name ">William Wennerström</p>
-    
-    
-    <p>Hello, I like computers.</p>
-    
-    
-    <p>
-      <a href="mailto:william@optmzr.se">
-        Contact me
-      </a>
-    </p>
-    
-  </div>
-  
-</aside>
-
-
-  </footer>
-</article>
-  </main>
-  
-<nav class="l-nav p-menu">
-  <ul class="p-menu__lists">
-    
-      
-      <li class="p-menu__listitem">
-        <a href="/">Blog</a>
-      </li>
-      
-    
-      
-      <li class="p-menu__listitem">
-        <a href="/about">About</a>
-      </li>
-      
-    
-      
-      <li class="p-menu__listitem">
-        <a href="/tags">Tags</a>
-      </li>
-      
-    
-  </ul>
-</nav>
-
-
-  <footer class="l-footer">
-    
-<ul class="c-links">
-  
-  
-  
-  
-  
-  <li class="c-links__item">
-    <a href="https://github.com/optmzr" target="_blank">
-      <svg viewBox="0 0 64 64" class="c-links__icon">
-        <title>github</title>
-        <use xlink:href="#icon-github"></use>
-      </svg>
-    </a>
-  </li>
-  
-  
-  <li class="c-links__item">
-    <a href="https://gitlab.com/optmzr" target="_blank">
-      <svg viewBox="0 0 64 64" class="c-links__icon">
-        <title>gitlab</title>
-        <use xlink:href="#icon-gitlab"></use>
-      </svg>
-    </a>
-  </li>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  <li class="c-links__item">
-    <a href="https://linkedin.com/in/william-wennerstr%C3%B6m-98b0a8b3" target="_blank">
-      <svg viewBox="0 0 64 64" class="c-links__icon">
-        <title>linkedin</title>
-        <use xlink:href="#icon-linkedin"></use>
-      </svg>
-    </a>
-  </li>
-  
-</ul>
-
-
-
-    <p class="p-copyright">
-      
-        Copyright &copy; 2018-2019 William Wennerström
-      
-    </p>
-  </footer>
-
-  
-    
-  
-
-</body>
-</html>
-
+can use third-party <code>git</code> overlays:</p><pre><code>emerge -a app-eselect/eselect-repository dev-vcs/git
+</code></pre><p>Then, add the <code>drkhsh</code> (and my own, heh) overlay:</p><pre><code>eselect repository add drkhsh-overlay git https://github.com/drkhsh/overlay.git
+eselect repository enable optmzr
+</code></pre><p>Syncronize the overlays with Portage:</p><pre><code>emerge --sync
+</code></pre><p>And install all packages in the <code>@favorites</code> set with:</p><pre><code>emerge -a @favorites
+</code></pre></section><footer><nav class="p-pagination c-pagination"><div class=c-pagination__ctrl><div class=c-pagination__newer><a href=https://optmzr.se/about/>Newer</a></div><div class=c-pagination__older></div></div></nav><aside class=p-author><div class="c-avatar p-author__avatar"><img alt="Author Avatar" src=/images/avatar.jpg></div><div class=p-author__body><p class="c-title p-author__name">William Wennerström</p><p>Hello, I like computers.</p><p><a href=mailto:william@optmzr.se>Contact me</a></p></div></aside></footer></article></main><nav class="l-nav p-menu"><ul class=p-menu__lists><li class=p-menu__listitem><a href=/>Blog</a></li><li class=p-menu__listitem><a href=/about>About</a></li><li class=p-menu__listitem><a href=/tags>Tags</a></li></ul></nav><footer class=l-footer><ul class=c-links><li class=c-links__item><a href=https://github.com/optmzr target=_blank><svg viewBox="0 0 64 64" class="c-links__icon"><title>github</title><use xlink:href="#icon-github"/></svg></a></li><li class=c-links__item><a href=https://gitlab.com/optmzr target=_blank><svg viewBox="0 0 64 64" class="c-links__icon"><title>gitlab</title><use xlink:href="#icon-gitlab"/></svg></a></li><li class=c-links__item><a href=https://linkedin.com/in/william-wennerstr%C3%B6m-98b0a8b3 target=_blank><svg viewBox="0 0 64 64" class="c-links__icon"><title>linkedin</title><use xlink:href="#icon-linkedin"/></svg></a></li></ul><p class=p-copyright>Copyright &copy; 2018-2019 William Wennerström</p></footer></body></html>
