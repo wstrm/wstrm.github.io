@@ -1,0 +1,24 @@
+<html>
+  <head>
+  </head>
+  <body>
+    <img id="quote" src="" />
+
+    <script>
+      function listener() {
+        document.getElementById("quote").src = this.responseText;
+      };
+
+      var req = new XMLHttpRequest();
+      req.addEventListener("load", listener);
+
+      function update() {
+        req.open("GET", "https://inspirobot.me/api?generate=true");
+        req.send();
+        setTimeout(update, 3600 * 1000);
+      };
+      update();
+
+    </script>
+  </body>
+</html>
