@@ -252,8 +252,8 @@ source /etc/profile
 export PS1=&quot;(chroot) $PS1&quot;
 </code></pre><h2 id=add-user>Add user</h2><p>Now, when you've succesfully booted into your new system, login as root and
 create a new user that can use <code>sudo</code>:</p><pre><code>emerge -a app-admin/sudo
-useradd -m -G users,wheel,audio,video -s /bin/bash optmzr # Change to your username.
-passwd optmzr # You'll get prompted to set the users password.
+useradd -m -G users,wheel,audio,video -s /bin/bash wstrm # Change to your username.
+passwd wstrm # You'll get prompted to set the users password.
 </code></pre><p>Enter <code>visudo</code> and uncomment the <code># %wheel ALL=(ALL) NOPASSWD: ALL</code> block:</p><pre><code>visudo # Uncomment the block, and save and exit.
 </code></pre><h2 id=install-my-favorite-portage-set>Install my favorite Portage set</h2><p>Below you have my favorites, it contains a X11 environment running <code>dwm</code>. Add it
 to <code>/etc/portage/sets/favorites</code>:</p><pre><code># Portage
