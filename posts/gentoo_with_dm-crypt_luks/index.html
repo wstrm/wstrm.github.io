@@ -203,7 +203,7 @@ sys-fs/cryptsetup static kernel -gcrypt -openssl
 (chroot) cp -a /sbin/cryptsetup /usr/src/initramfs/sbin/cryptsetup
 (chroot) cp -a /bin/busybox /usr/src/initramfs/bin/busybox
 (chroot) chroot /usr/src/initramfs /bin/busybox --install -s
-</code></pre><p>Create <code>/usr/src/initramfs/init</code> with the following content (NOTE: update to correct drive letters):</p><pre><code>#!/bin/busybox sh
+</code></pre><p>Create <code>/usr/src/initramfs/init</code> with the following content:</p><pre><code>#!/bin/busybox sh
 
 die() {
 	echo &quot;Something went wrong. Dropping to a shell.&quot;
@@ -213,16 +213,28 @@ die() {
 # Mount the /proc and /sys filesystems.
 mount -t proc none /proc
 mount -t sysfs none /sys
+mount -t devtmpfs none /dev
+
+# Be a little bit more quiet.
+echo 0 &gt; /proc/sys/kernel/printk
+clear
+
+wait # For dev.
 
 # Open encrypted partition, and place at /dev/mapper/root.
-# NOTE: Update drive letter below.
-cryptsetup open /dev/sdX2 root &amp;&amp; root=/dev/mapper/root || die
+cryptsetup open $(findfs PARTLABEL=root) root &amp;&amp; root=/dev/mapper/root || die
+
+wait # For cryptsetup.
+
+# It's okay to speak again.
+echo 1 &gt; /proc/sys/kernel/printk
 
 mount -o ro /dev/mapper/root /mnt/root || die
 
 # Clean up
 umount /proc
 umount /sys
+umount /dev
 
 # Switch to real root.
 exec switch_root /mnt/root /sbin/init || die
