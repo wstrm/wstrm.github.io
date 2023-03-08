@@ -5,28 +5,28 @@ errors&rdquo;, but at the same time the ergonomics of handling errors from
 With the Go 1.20 release, there&rsquo;s a nifty way to handle this with the new
 <a href=https://pkg.go.dev/errors#Join><code>errors.Join</code></a>.</p><p>Let me first explain a bit about the issue. Usually if you want to do the
 &ldquo;right&rdquo; thing and check for errors in a <code>defer</code> call, you end with something
-like this:</p><pre tabindex=0><code>func example(r io.ReadCloser) (err error) {
-    // We need this big anonymous function that takes up a bunch of
-    // precious lines...
-    defer func() {
-        // Ugghh, need to check for the error and then set it D:
-        cerr := r.Close()
-        if cerr != nil {
-            err = cerr
-        }
-    }
-
-	// ... code that reads from r ...
-}
-</code></pre><p>This approach has a shortcoming. If the <code>err</code> variable was set
+like this:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>example</span>(<span style=color:#a6e22e>r</span> <span style=color:#a6e22e>io</span>.<span style=color:#a6e22e>ReadCloser</span>) (<span style=color:#a6e22e>err</span> <span style=color:#66d9ef>error</span>) {
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// We need this big anonymous function that takes up a bunch of
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#75715e>// precious lines...
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#66d9ef>defer</span> <span style=color:#66d9ef>func</span>() {
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// Ugghh, need to check for the error and then set it D:
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        <span style=color:#a6e22e>cerr</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>r</span>.<span style=color:#a6e22e>Close</span>()
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> <span style=color:#a6e22e>cerr</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
+</span></span><span style=display:flex><span>            <span style=color:#a6e22e>err</span> = <span style=color:#a6e22e>cerr</span>
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#75715e>// ... code that reads from r ...
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>}
+</span></span></code></pre></div><p>This approach has a shortcoming. If the <code>err</code> variable was set
 before the <code>defer</code> function is called we&rsquo;ll override the original error with our
 <code>(io.ReadCloser).Close()</code> call error.</p><p>Even worse, if you&rsquo;re lazy and you figured the error check is not worth the
-amount of work, you end up with just ignoring the error altogether:</p><pre tabindex=0><code>func example(r io.ReadCloser) (err error) {
-    defer r.Close() // Oh no, we&#39;ll never know if this errors :(
-
-	// ... code that reads from r ...
-}
-</code></pre><p>This is pretty common among the codebases I&rsquo;ve seen (and I&rsquo;m also an offender of
+amount of work, you end up with just ignoring the error altogether:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>example</span>(<span style=color:#a6e22e>r</span> <span style=color:#a6e22e>io</span>.<span style=color:#a6e22e>ReadCloser</span>) (<span style=color:#a6e22e>err</span> <span style=color:#66d9ef>error</span>) {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>defer</span> <span style=color:#a6e22e>r</span>.<span style=color:#a6e22e>Close</span>() <span style=color:#75715e>// Oh no, we&#39;ll never know if this errors :(
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>
+</span></span><span style=display:flex><span>	<span style=color:#75715e>// ... code that reads from r ...
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>}
+</span></span></code></pre></div><p>This is pretty common among the codebases I&rsquo;ve seen (and I&rsquo;m also an offender of
 this). It&rsquo;s not really the proper way to do things. You should either handle the
 error, or at least log it so you&rsquo;re aware of that there are issues closing the
 reader for whatever reason.</p><h2 id=luckily-we-now-have-errorsjoin->Luckily we now have errors.Join 🤓</h2><p>With the Go 1.20 release, you can now join errors so that you don&rsquo;t override the
@@ -35,40 +35,40 @@ repetitive <code>if err != nil</code> check all the time. The new function
 <a href=https://pkg.go.dev/errors#Join><code>errors.Join</code></a> will only return errors that are
 non-<code>nil</code>. And if all are <code>nil</code>, it&rsquo;ll of course return <code>nil</code>. This perfectly
 fits the use case of handling close errors in a <code>defer</code>! 💥</p><p>Let&rsquo;s create a new anonymous <code>defer</code> function, and just pass along our original
-<code>err</code> and the <code>(io.ReadCloser).Close()</code> error:</p><pre tabindex=0><code>func example(r io.ReadCloser) (err error) {
-	defer func() {
-		err = errors.Join(err, r.Close()) // Magic!
-	}()
-
-	// ... code that reads from r ...
-}
-</code></pre><p>Psst, here&rsquo;s a full working example: <a href=https://go.dev/play/p/J-rkdh0jYme>https://go.dev/play/p/J-rkdh0jYme</a></p><p>Now, if any of the errors occur, the <code>err</code> will be set. In the case where both
-errors, we get a new <code>error</code> where they are joined with a <code>\n</code> delimiter:</p><pre tabindex=0><code>origErr := errors.New(&#34;original error&#34;)
-closeErr := errors.New(&#34;close error&#34;)
-joinedErr := errors.Join(origErr, closeErr)
-
-fmt.Println(joinedErr)
-// Output:
-// original error
-// close error
-</code></pre><p>You can even take it one step further and get rid of the anonymous function by
-defining a &ldquo;joinErrs(&mldr;)&rdquo; that takes a pointer to the original error, like so:</p><pre tabindex=0><code>func joinErrs(origErr *error, newErr error) {
-	*origErr = errors.Join(*origErr, newErr)
-}
-
-func example(r io.ReadCloser) (err error) {
-	defer joinErrs(&amp;err, r.Close()) // Woho! Only a single line :D
-
-	// ... code that reads from r ...
-}
-</code></pre><p>Wow! We just saved two (!!) lines of code everytime we need to <code>defer</code> a
+<code>err</code> and the <code>(io.ReadCloser).Close()</code> error:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>example</span>(<span style=color:#a6e22e>r</span> <span style=color:#a6e22e>io</span>.<span style=color:#a6e22e>ReadCloser</span>) (<span style=color:#a6e22e>err</span> <span style=color:#66d9ef>error</span>) {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>defer</span> <span style=color:#66d9ef>func</span>() {
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>err</span> = <span style=color:#a6e22e>errors</span>.<span style=color:#a6e22e>Join</span>(<span style=color:#a6e22e>err</span>, <span style=color:#a6e22e>r</span>.<span style=color:#a6e22e>Close</span>()) <span style=color:#75715e>// Magic!
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	}()
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#75715e>// ... code that reads from r ...
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>}
+</span></span></code></pre></div><p>Psst, here&rsquo;s a full working example: <a href=https://go.dev/play/p/J-rkdh0jYme>https://go.dev/play/p/J-rkdh0jYme</a></p><p>Now, if any of the errors occur, the <code>err</code> will be set. In the case where both
+errors, we get a new <code>error</code> where they are joined with a <code>\n</code> delimiter:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#a6e22e>origErr</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>errors</span>.<span style=color:#a6e22e>New</span>(<span style=color:#e6db74>&#34;original error&#34;</span>)
+</span></span><span style=display:flex><span><span style=color:#a6e22e>closeErr</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>errors</span>.<span style=color:#a6e22e>New</span>(<span style=color:#e6db74>&#34;close error&#34;</span>)
+</span></span><span style=display:flex><span><span style=color:#a6e22e>joinedErr</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>errors</span>.<span style=color:#a6e22e>Join</span>(<span style=color:#a6e22e>origErr</span>, <span style=color:#a6e22e>closeErr</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>joinedErr</span>)
+</span></span><span style=display:flex><span><span style=color:#75715e>// Output:
+</span></span></span><span style=display:flex><span><span style=color:#75715e>// original error
+</span></span></span><span style=display:flex><span><span style=color:#75715e>// close error
+</span></span></span></code></pre></div><p>You can even take it one step further and get rid of the anonymous function by
+defining a &ldquo;joinErrs(&mldr;)&rdquo; that takes a pointer to the original error, like so:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>joinErrs</span>(<span style=color:#a6e22e>origErr</span> <span style=color:#f92672>*</span><span style=color:#66d9ef>error</span>, <span style=color:#a6e22e>newErr</span> <span style=color:#66d9ef>error</span>) {
+</span></span><span style=display:flex><span>	<span style=color:#f92672>*</span><span style=color:#a6e22e>origErr</span> = <span style=color:#a6e22e>errors</span>.<span style=color:#a6e22e>Join</span>(<span style=color:#f92672>*</span><span style=color:#a6e22e>origErr</span>, <span style=color:#a6e22e>newErr</span>)
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>example</span>(<span style=color:#a6e22e>r</span> <span style=color:#a6e22e>io</span>.<span style=color:#a6e22e>ReadCloser</span>) (<span style=color:#a6e22e>err</span> <span style=color:#66d9ef>error</span>) {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>defer</span> <span style=color:#a6e22e>joinErrs</span>(<span style=color:#f92672>&amp;</span><span style=color:#a6e22e>err</span>, <span style=color:#a6e22e>r</span>.<span style=color:#a6e22e>Close</span>()) <span style=color:#75715e>// Woho! Only a single line :D
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>
+</span></span><span style=display:flex><span>	<span style=color:#75715e>// ... code that reads from r ...
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>}
+</span></span></code></pre></div><p>Wow! We just saved two (!!) lines of code everytime we need to <code>defer</code> a
 <code>(io.ReadCloser).Close()</code> call.</p><p>And here&rsquo;s a working example of this: <a href=https://go.dev/play/p/JDE-AJvujJr>https://go.dev/play/p/JDE-AJvujJr</a></p><h2 id=tldr>TL;DR</h2><p>Please set errors from <code>defer</code> calls with
-<a href=https://pkg.go.dev/errors#Join><code>errors.Join</code></a>:</p><pre tabindex=0><code>func example(r io.ReadCloser) (err error) {
-	defer func() {
-		err = errors.Join(err, r.Close()) // Magic!
-	}()
-
-	// ... code that reads from r ...
-}
-</code></pre><p>Enjoy!</p></section><footer><nav class="p-pagination c-pagination"><div class=c-pagination__ctrl><div class=c-pagination__newer></div><div class=c-pagination__older><a href=https://wstrm.dev/posts/ignore-git-lfs-for-remote/>Older</a></div></div></nav><aside class=p-author><div class="c-avatar p-author__avatar"><img alt="Author Avatar" src=/images/avatar.png></div><div class=p-author__body><p class="c-title p-author__name">William Wennerström</p><p>Hello, I like computers.</p><p><a href=mailto:william@wstrm.dev>Contact me</a></p></div></aside></footer></article></main><nav class="l-nav p-menu"><ul class=p-menu__lists><li class=p-menu__listitem><a href=/>Blog</a></li><li class=p-menu__listitem><a href=/about>About</a></li><li class=p-menu__listitem><a href=/tags>Tags</a></li></ul></nav><footer class=l-footer><ul class=c-links><li class=c-links__item><a href=https://github.com/wstrm target=_blank><svg viewBox="0 0 64 64" class="c-links__icon"><title>github</title><use xlink:href="#icon-github"/></svg></a></li><li class=c-links__item><a href=https://gitlab.com/wstrm target=_blank><svg viewBox="0 0 64 64" class="c-links__icon"><title>gitlab</title><use xlink:href="#icon-gitlab"/></svg></a></li><li class=c-links__item><a href=https://linkedin.com/in/william-wennerstrom target=_blank><svg viewBox="0 0 64 64" class="c-links__icon"><title>linkedin</title><use xlink:href="#icon-linkedin"/></svg></a></li></ul><p class=p-copyright>Copyright &copy; 2018-2020 William Wennerström</p></footer><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<a href=https://pkg.go.dev/errors#Join><code>errors.Join</code></a>:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>example</span>(<span style=color:#a6e22e>r</span> <span style=color:#a6e22e>io</span>.<span style=color:#a6e22e>ReadCloser</span>) (<span style=color:#a6e22e>err</span> <span style=color:#66d9ef>error</span>) {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>defer</span> <span style=color:#66d9ef>func</span>() {
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>err</span> = <span style=color:#a6e22e>errors</span>.<span style=color:#a6e22e>Join</span>(<span style=color:#a6e22e>err</span>, <span style=color:#a6e22e>r</span>.<span style=color:#a6e22e>Close</span>()) <span style=color:#75715e>// Magic!
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	}()
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#75715e>// ... code that reads from r ...
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>}
+</span></span></code></pre></div><p>Enjoy!</p></section><footer><nav class="p-pagination c-pagination"><div class=c-pagination__ctrl><div class=c-pagination__newer></div><div class=c-pagination__older><a href=https://wstrm.dev/posts/ignore-git-lfs-for-remote/>Older</a></div></div></nav><aside class=p-author><div class="c-avatar p-author__avatar"><img alt="Author Avatar" src=/images/avatar.png></div><div class=p-author__body><p class="c-title p-author__name">William Wennerström</p><p>Hello, I like computers.</p><p><a href=mailto:william@wstrm.dev>Contact me</a></p></div></aside></footer></article></main><nav class="l-nav p-menu"><ul class=p-menu__lists><li class=p-menu__listitem><a href=/>Blog</a></li><li class=p-menu__listitem><a href=/about>About</a></li><li class=p-menu__listitem><a href=/tags>Tags</a></li></ul></nav><footer class=l-footer><ul class=c-links><li class=c-links__item><a href=https://github.com/wstrm target=_blank><svg viewBox="0 0 64 64" class="c-links__icon"><title>github</title><use xlink:href="#icon-github"/></svg></a></li><li class=c-links__item><a href=https://gitlab.com/wstrm target=_blank><svg viewBox="0 0 64 64" class="c-links__icon"><title>gitlab</title><use xlink:href="#icon-gitlab"/></svg></a></li><li class=c-links__item><a href=https://linkedin.com/in/william-wennerstrom target=_blank><svg viewBox="0 0 64 64" class="c-links__icon"><title>linkedin</title><use xlink:href="#icon-linkedin"/></svg></a></li></ul><p class=p-copyright>Copyright &copy; 2018-2020 William Wennerström</p></footer><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script id=MathJax-script async src=https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js></script></body></html>
