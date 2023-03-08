@@ -1,4 +1,4 @@
-%!TEX TS-program = xelatex
+%!TEX TS-program = luatex
 \documentclass[12pt,a4paper]{report}
 \usepackage[utf8]{inputenc}
 \usepackage{upquote}
@@ -8,6 +8,8 @@
 \usepackage{fancyhdr}
 \usepackage{titlesec, blindtext, color}
 \usepackage{amsmath}
+%\usepackage[square,numbers]{natbib}
+%\bibliographystyle{abbrvnat}
 \usepackage{graphicx}
 \usepackage{physics}
 \usepackage{csvsimple}
@@ -31,6 +33,8 @@
 \usepackage{svg}
 \usepackage{lastpage}
 \usepackage{todonotes}
+\usepackage[backend=biber, style=ieee, sorting=ynt, alldates=edtf, seconds=true]{biblatex}
+\addbibresource{sources.bib}
 \usepackage{xcolor}
 \hypersetup{
     colorlinks,
@@ -38,9 +42,9 @@
     citecolor={blue!50!black},
     urlcolor={blue!80!black}
 }
-\pgfplotsset{width=10cm,compat=1.9} 
+\pgfplotsset{width=10cm,compat=1.9}
 \usepgfplotslibrary{external}
-\tikzexternalize 
+\tikzexternalize
 
 \newcommand{\hsp}{\hspace{20pt}}
 \titleformat{\chapter}[hang]{\Huge\bfseries}{\thechapter\hsp}{0pt}{\Huge\bfseries}
@@ -66,31 +70,31 @@
 \definecolor{mygray}{rgb}{0.5,0.5,0.5}
 \definecolor{mymauve}{rgb}{0.58,0,0.82}
 
-\lstset{ 
-  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}; should come as last argument
-  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
-  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
-  breaklines=true,                 % sets automatic line breaking
-  captionpos=b,                    % sets the caption-position to bottom
-  commentstyle=\color{mygreen},    % comment style
-  deletekeywords={...},            % if you want to delete keywords from the given language
-  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
-  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
-  frame=single,	                   % adds a frame around the code
-  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
-  keywordstyle=\color{blue},       % keyword style
-  language=C,                      % the language of the code
-  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
-  numbersep=5pt,                   % how far the line-numbers are from the code
-  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
-  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
-  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
-  showstringspaces=false,          % underline spaces within strings only
-  showtabs=false,                  % show tabs within strings adding particular underscores
-  stepnumber=1,                    % the step between two line-numbers. If it's 1, each line will be numbered
-  stringstyle=\color{mymauve},     % string literal style
-  tabsize=4,	                   % sets default tabsize to 2 spaces
-  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+\lstset{
+    backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}; should come as last argument
+    basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+    breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+    breaklines=true,                 % sets automatic line breaking
+    captionpos=b,                    % sets the caption-position to bottom
+    commentstyle=\color{mygreen},    % comment style
+    deletekeywords={...},            % if you want to delete keywords from the given language
+    escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+    extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+    frame=single,	                   % adds a frame around the code
+    keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+    keywordstyle=\color{blue},       % keyword style
+    language=C,                      % the language of the code
+    numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+    numbersep=5pt,                   % how far the line-numbers are from the code
+    numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+    rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+    showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+    showstringspaces=false,          % underline spaces within strings only
+    showtabs=false,                  % show tabs within strings adding particular underscores
+    stepnumber=1,                    % the step between two line-numbers. If it's 1, each line will be numbered
+    stringstyle=\color{mymauve},     % string literal style
+    tabsize=4,	                   % sets default tabsize to 2 spaces
+    title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
 }
 
 % Group name
@@ -105,9 +109,9 @@
     }{\color{black}{
         phihjo-2@student.ltu.se
     }}}
-    
+
     \and
-    
+
     Wennerström, William\\
     \texttt{\href{
         mailto:wenwil-5@student.ltu.se
@@ -125,10 +129,10 @@
 
 % Define information about the school/university
 \newcommand{\schoolinfo}{Department of Computer Science, \\
-                         Electrical and Space Engineering \\
-                         \bigskip{}
-                         Luleå University of Technology \\
-                         Luleå, Sweden
+Electrical and Space Engineering \\
+\bigskip{}
+Luleå University of Technology \\
+Luleå, Sweden
 }
 
 \title{
@@ -137,8 +141,8 @@
     \vspace{1.8em}
     % ~~Tinder~~ Roaster logotype
     \begin{figure}[H]
-      \centering
-      \includesvg[width=2cm]{logotype.svg}
+        \centering
+        \includesvg[width=2cm]{logotype.svg}
     \end{figure}
     \textbf{\projectname{}} \break
     \author{
@@ -147,19 +151,19 @@
     \schoolinfo{}
     \vspace{1.8em}
     \begin{figure}[H]
-      \centering
-      \includegraphics[width=5cm]{LTU.jpg}
+        \centering
+        \includegraphics[width=5cm]{LTU.jpg}
     \end{figure}
 }
 
 \renewcommand\footnotemark{}
-    \date{\today}
- 
+\date{\today}
+
 \pagestyle{fancyplain}
 \renewcommand{\headrulewidth}{0pt}
 \renewcommand{\footrulewidth}{0pt}
 \lhead{}
- 
+
 \begin{document}
 
 \maketitle
@@ -167,7 +171,7 @@
 \newpage
 
 {\hypersetup{linkcolor=black}
-    \tableofcontents}
+\tableofcontents}
 \newpage
 
 %\listoftodos
@@ -186,7 +190,7 @@ Roaster analyzes and grades your code. The user can register and follow their pe
 % As the website is thought to be forth most educational, no formatting is done on the code and is left as an exercise for % the user.
 %
 %}
-% The site is thought to be forth most educational, in this scenario it means that the solution is perfectly capable of doing the formatting and linting for the student / user, but then they would not learn what kind of style errors 
+% The site is thought to be forth most educational, in this scenario it means that the solution is perfectly capable of doing the formatting and linting for the student / user, but then they would not learn what kind of style errors
 % or semantic improvements was made. Therefore does the online web application only list the errors and warnings, with precise origin in the source code as an exercise for the student / user to fix.
 
 A typical user scenario could be that a teacher is sick and tired of reading spaghetti code made by novice students and would rather let them learn that readability and an uniform code style is important. But that takes time to teach, and the teacher has to focus on the actual subject of the course.
@@ -200,7 +204,7 @@ The participants of the course were encouraged to learn new technologies and too
 
 \section{Database}
 In order to choose the right database for a project the designers need to consider what type of data that is to be stored and if availability (NoSQL) or robustness (SQL) is of utmost importance.
-Considering the aspects above the developers chose robustness, a SQL database should be the best choice for this type of application where mainly structured data is stored. 
+Considering the aspects above the developers chose robustness, a SQL database should be the best choice for this type of application where mainly structured data is stored.
 
 While designing the system, the developers wanted the database to handle objects with strict value types (domains), hence a Object Relational Database (ORD) was desired and PostgreSQL has good support for advanced features for object handling and custom definition of objects. PostgreSQL is also fully ACID compliant\cite{pg-acid} which is desired. PostgreSQL has the ability to use advanced data constraints which enables better robustness. PostgreSQL also has good conformance with the SQL standard\cite{pg-sql-conformance}. PostgreSQL is one of the most advanced and fastest databases\cite{db-benchmark} that is free to use and open source.
 One of the two developers in this project had prior experience with PostgreSQL but only shallow knowledge which also made it interesting as a technology to learn more about.
@@ -211,7 +215,7 @@ Competing technologies that we discarded due to the following drawbacks.
 \begin{itemize}
     \item MySQL ignores \texttt{CHECK} constraints\cite{mysql-check-constraint}, requires writing advanced triggers to emulate \texttt{CHECK} instead\cite{mysql-emulate-check}.
     \item SQLite is primarily for embedded systems or low to medium volume websites and doesn't scale\cite{sqlite-when-to-use}.
-    \item MariaDB doesn't offer the same amount of data integrity out of the box as \\ PostgreSQL\cite{mariadb-data-integrity}, up to the user to implement it correctly. 
+    \item MariaDB doesn't offer the same amount of data integrity out of the box as \\ PostgreSQL\cite{mariadb-data-integrity}, up to the user to implement it correctly.
 \end{itemize}
 
 \section{Session store}
@@ -276,10 +280,10 @@ All the frameworks listed fulfilled the criteria of having typing's for TypeScri
 Mithril.js\cite{mithril-js} was chosen due to its speed, component design pattern and small size. It is also self contained and requires no external dependencies. The developers felt that its small community size was no big problem and could be seen as a challenge.
 
 \begin{figure}[H]
-  \centering
-  \includegraphics[width=14cm]{mithril-js-perf.jpg}
-  \caption{Comparison of JavaScript frameworks size and performance\cite{mithril-speed}.}
-  \label{fig:js-comp}
+    \centering
+    \includegraphics[width=14cm]{mithril-js-perf.jpg}
+    \caption{Comparison of JavaScript frameworks size and performance\cite{mithril-speed}.}
+    \label{fig:js-comp}
 \end{figure}
 
 \newpage
@@ -309,16 +313,16 @@ Semantic UI also had support for customization using their \texttt{semantic-ui-l
 
 \chapter{System architecture \& design}
 \begin{figure}[H]
-  \centering
-  \includesvg[width=16cm]{architecture.svg}
-  \caption{High level system architecture overview of the Roaster system.}
+    \centering
+    \includesvg[width=16cm]{architecture.svg}
+    \caption{High level system architecture overview of the Roaster system.}
 \end{figure}
 
 \section{Infrastructure}
 \begin{figure}[H]
-  \centering
-  \includegraphics[width=16cm]{Cloud-infrastructure.png}
-  \caption{AWS infrastructure.}
+    \centering
+    \includegraphics[width=16cm]{Cloud-infrastructure.png}
+    \caption{AWS infrastructure.}
 \end{figure}
 The system is designed to be deployable independently without any dependencies to the  underlying platform. This led to containerization of the server in order to facilitate the deployment process and avoid installation mishaps. Both the databases are not containerized as these are run using AWS' SaaS\footnote{Software as a Service.} solutions instead.
 
@@ -326,28 +330,28 @@ The whole software architecture is designed to be scalable and is currently runn
 
 The web server (\texttt{roasterd}) runs in an Elastic Beanstalk (EB) environment that scales the web server automatically depending on the load. AWS uses nginx for load balancing which also provides certificates for HTTPS/TLS. Therefore, the web server behind the load balancer does not use HTTPS/TLS as it was deemed unnecessary.
 
-If the solution is to be deployed at some other hosting solution like your own servers, and scalability is wanted, one would need to setup a load balancer in front of all the web servers. It's also wise to setup a heavily tested reverse proxy on the load balancer, like nginx. To match the size of your web servers you could also scale the databases. 
+If the solution is to be deployed at some other hosting solution like your own servers, and scalability is wanted, one would need to setup a load balancer in front of all the web servers. It's also wise to setup a heavily tested reverse proxy on the load balancer, like nginx. To match the size of your web servers you could also scale the databases.
 
-The communication between the application server and the databases are not encrypted as of now since they are all hosted in a Virtual Private Cloud (VPC) in AWS and thereby sandboxed. VPC also supports encrypted communication internally, but this is not used due to the cost. If implementing this on your own data centre or hardware you have to decide on this yourself in order to secure the architecture. The web server has  support for encrypted communication between both databases. 
+The communication between the application server and the databases are not encrypted as of now since they are all hosted in a Virtual Private Cloud (VPC) in AWS and thereby sandboxed. VPC also supports encrypted communication internally, but this is not used due to the cost. If implementing this on your own data centre or hardware you have to decide on this yourself in order to secure the architecture. The web server has  support for encrypted communication between both databases.
 
 \section{Web application (\texttt{roasterc})}
 The web application design structure is based on the MVC\footnote{Model View Controller.} design pattern. To further isolate the logic the web application uses components, inspired by the pattern used by React\cite{react-component}. This is in-line with the reactive programming model that the Mithril.js framework is inspired by.
 
 \subsection{SPA}
 \begin{figure}[H]
-  \centering
-  \includegraphics[width=10cm]{spa-lifecycle.pdf}
-  \caption{Roasterc single page application lifecycle.}
-  \label{fig:roasterc-lifecycle}
+    \centering
+    \includegraphics[width=10cm]{spa-lifecycle.pdf}
+    \caption{Roasterc single page application lifecycle.}
+    \label{fig:roasterc-lifecycle}
 \end{figure}
 
-The web application is a single page application (SPA) and is served as a single HTML document at the root (\texttt{/}) of the web server. The HTML document, CSS layouts and JavaScript files that is served through this endpoint bootstraps a client side router that serves each different view of the web application, see fig. \ref{fig:roasterc-lifecycle}. 
+The web application is a single page application (SPA) and is served as a single HTML document at the root (\texttt{/}) of the web server. The HTML document, CSS layouts and JavaScript files that is served through this endpoint bootstraps a client side router that serves each different view of the web application, see fig. \ref{fig:roasterc-lifecycle}.
 
 \begin{figure}[H]
-  \centering
-  \includegraphics[width=10cm]{home-view-components.pdf}
-  \caption{Example of components in the Home view.}
-  \label{fig:home-view-components}
+    \centering
+    \includegraphics[width=10cm]{home-view-components.pdf}
+    \caption{Example of components in the Home view.}
+    \label{fig:home-view-components}
 \end{figure}
 
 These views are a collection of components each following the MVC pattern, see fig. \ref{fig:home-view-components}. Mithril.js allows the developer to create the views and components with Hyperscript that renders the HTML through the DOM\footnote{Document Object Model.}. The view is generated by diffing the current view with the new one, allowing Mithril.js to only update the relevant parts of the DOM. As a preliminary step to be able to do this fast, Mithril.js creates a \textit{Virtual DOM}, an internal representation of the DOM that it can work with faster.
@@ -365,17 +369,17 @@ Therefore the Monaco editor is not linked with the initial HTML document. Instea
 Code reference/documentation for the \texttt{roasterd} web server (written in Go) can be found here: \url{https://godoc.org/github.com/LuleaUniversityOfTechnology/2018-project-roaster}.
 
 \begin{figure}[H]
-  \centering
-  \includegraphics[width=17cm]{server-architecture.png}
-  \caption{Web server (\texttt{roasterd}) architecture.}
+    \centering
+    \includegraphics[width=17cm]{server-architecture.png}
+    \caption{Web server (\texttt{roasterd}) architecture.}
 \end{figure}
 
 \subsection{HTTP and routing}
 \begin{figure}[H]
-  \centering
-  \includegraphics[width=16cm]{roasterd-req-resp-lifecycle-v0_0_1.pdf}
-  \caption{Roasterd web server request and response lifecycle.}
-  \label{fig:roasterd-lifecycle}
+    \centering
+    \includegraphics[width=16cm]{roasterd-req-resp-lifecycle-v0_0_1.pdf}
+    \caption{Roasterd web server request and response lifecycle.}
+    \label{fig:roasterd-lifecycle}
 \end{figure}
 
 Like the web application the web server is also based on the MVC design pattern. The generic handling of HTTP such as CSRF mitigation, \texttt{Content-Type} checking and CORS policies are implemented according to the middleware pattern. The middleware pattern abstracts parts into layers that are coupled together in a pipeline. At the end of the request chain the route handler that adheres to the MVC pattern handles the request and then sends a response that will go through the same middleware pipeline in the reverse direction, see fig. \ref{fig:roasterd-lifecycle}. The route handlers are defined in the \texttt{router/route}\cite{roaster-router-route} Go package and represents the controller and view in the MVC model. These route handlers talks to the database via the model that is contained in a separate Go package, called \texttt{model}\cite{roaster-model}.
@@ -395,10 +399,10 @@ The cache can be found in the \texttt{analyze/cache}\cite{roasterd-cache} packag
 
 \section{Database}
 \begin{figure}[H]
-  \centering
-  \includegraphics[width=16cm]{roaster-database-v0_0_1.png}
-  \caption{UML diagram of the Roasterd SQL database design.}
-  \label{fig:roasterd-database}
+    \centering
+    \includegraphics[width=16cm]{roaster-database-v0_0_1.png}
+    \caption{UML diagram of the Roasterd SQL database design.}
+    \label{fig:roasterd-database}
 \end{figure}
 PostgreSQL domains are utilized for validating the data stored in columns. This can be seen in fig. \ref{fig:roasterd-database} where the \texttt{username} column is of the type \texttt{roaster.username}. This custom domain data type will ensure that not any forbidden characters are in the usernames and that their length is atleast 3 characters and below 255. Similarly there are several other domains defined, such as \texttt{roaster.code}, \texttt{roaster.fullname} and \texttt{roaster.email}. The definitions for these domains can be found in \texttt{doc/postgresql/roaster-database-v0.0.2.sql}\cite{sql-def-line6}.
 
@@ -436,17 +440,23 @@ The HTTP status codes are used to denote both different successful states and er
 \newcommand{\rscore}{Roast\textsuperscript{\textregistered} Score\textsuperscript{\texttrademark}}
 
 \section{Grade system}
-There are two different simple measurements for the submitted code, \rscore and \rratio.
+There are two different simple measurements for the submitted code, \rscore{}
+and \rratio{}.
 
-The \rscore is calculated per code submission and is defined as follows:
+The \rscore{} is calculated per code submission and is defined as follows:
 \begin{equation*}
-    \text{\rscore} = \left\lfloor\frac{L}{0,8E + 0,29W + 1}\right\rceil
+    \text{Roast Score} = \left\lfloor\frac{L}{0,8E + 0,29W + 1}\right\rceil
 \end{equation*}
-Where $L$ is the number of lines of code and $E$ and $W$ is the number of errors and warnings, respectively. The cost set for an error is $0,8$ and $0,2$ for a warning, so for every line of code $0,8$ points is removed if it's an error and $0,2$ is removed if it's a warning. So a line with both an error and a warning is worth $0$ points. The resulting score is rounded to the nearest integer. The \rscore can never be less than $0$.
+Where $L$ is the number of lines of code and $E$ and $W$ is the number of errors
+and warnings, respectively. The cost set for an error is $0,8$ and $0,2$ for a
+warning, so for every line of code $0,8$ points is removed if it's an error and
+$0,2$ is removed if it's a warning. So a line with both an error and a warning
+is worth $0$ points. The resulting score is rounded to the nearest integer. The
+\rscore{} can never be less than $0$.
 
 The \rratio can be calculated for both single submissions or all, it's defined as:
 \begin{equation*}
-    \text{\rratio} = \left\lfloor 1 - \frac{E + W}{S} * 100 \right\rceil
+    \text{Roast Score} = \left\lfloor 1 - \frac{E + W}{S} * 100 \right\rceil
 \end{equation*}
 Where $S$ is the number of \textit{successful} lines, i.e. line without any errors or warnings. $E$ and $W$ is as previous the number of errors and warnings. The \rratio formula will return a percentage where $100 \%$ is the best possible ratio.
 
@@ -457,7 +467,7 @@ Where $S$ is the number of \textit{successful} lines, i.e. line without any erro
 
 
 % Same as above?
-% The frontend is based on a JavaScript framework called Mithril.js that encourages modularization and a model component based pattern. This takes advantage of a virtual DOM that utilizes diffing which makes it very fast, and mitigates many security risks like XSS attacks. 
+% The frontend is based on a JavaScript framework called Mithril.js that encourages modularization and a model component based pattern. This takes advantage of a virtual DOM that utilizes diffing which makes it very fast, and mitigates many security risks like XSS attacks.
 
 \chapter{API}
 The Roaster API v0.0.1 is fully documented and can be viewed at the following address: \url{https://roast.software/doc/restapi/}. The API tries to adhere to the REST principles and is designed around the CRUD pattern, see \autoref{sec:api-design} for more information.
@@ -536,7 +546,7 @@ Several security issues has been taken into consideration when developing the sy
 \section{HTTPS/TLS}
 The connection from the client to the web server is made over TLS with a Amazon signed certificate.
 This is configured by the Elastic Load Balancer running on Elastic Beanstalk that acts like a reverse proxy.
-The request then propagates through the VPC (Virtual Private Cloud) in AWS in plaintext. 
+The request then propagates through the VPC (Virtual Private Cloud) in AWS in plaintext.
 
 \section{Injection}
 Injection was the top security vulnerability in OWASP Top 10 list\cite{owasp-top-10}. For Roaster this includes SQL and OS injections. Go's \texttt{database/sql} library enforces SQL parameterization per default with placeholder parameters\cite{go-database-sql}, ensuring that SQL injections are not possible, as the values are binary safe. OS injections could be an issue due to that the analyzis of code is passed to a separate OS level process (in this case the Python 3 application Flake8). This issue is solved by not allowing any change of the actual command that gets passed to the OS - it's hard coded and only allows for input through a Linux pipe. Flake8 also does not execute any of the code that it analyzes as the program only uses static code analysis\cite{pyflakes}\cite{mccabe}\cite{pycodestyle}.
@@ -576,13 +586,13 @@ SHA-512 is a \textit{fast} hash algorithm not made for password hashing. Bcrypt 
 designed to be slow and hard to speed up using hardware such as FPGAs and
 ASICs. The work factor is set to 12 which should make the expensive Blowfish
 setup take $> 250$ ms\footnote{$364.815906$ ms precisely on one of the developers slow laptop.}.
-The Bcrypt algorithm also takes care of salting of the password and prepends 
+The Bcrypt algorithm also takes care of salting of the password and prepends
 it with the resulting hash.
 
 
 Dropbox has a great article\cite{dropbox-passwords} on their password hashing scheme
 which the Roaster scheme shares many similarities with, however, encryption using AES-256
-with a global pepper\footnote{Shared global encryption key.} is not used. This was deemed overkill 
+with a global pepper\footnote{Shared global encryption key.} is not used. This was deemed overkill
 by the developers for the use case of this project. Dropbox also encodes their SHA-512 with base 64,
 which is not needed in the case of Roaster because the hash result can be saved as raw
 bytes\footnote{Using PostgreSQL's \texttt{bytea} data type.}.
@@ -612,7 +622,7 @@ The only requirements set for passwords are a minimum length of 8 characters and
 In hindsight, the team might have chose a different cloud provider due to complexity in the configuration and maintaining of the service. The cost model is elusive which causes unnecessary re-configurations when choosing a too (cost) expensive configuration. The re-configurations wouldn't be such a problem if it were a more streamlined process and a matter of adjusting a few things in the web interface rather than rebuilding the majority of the environment, which could take hours. The documentation is decent but gives more to ask for when something is not behaving like expected, this made the developers having to resort to unofficial sources for debugging the environment. The logging of the environment could also be better, only outputting logs with scrambled time stamps makes it very hard to read. A cloud provider which offers a simpler service would suffice until the architecture of the site becomes more complex like wanting to run the Python code analyzers as micro services etc.
 
 \section{Mithril.js}
-Mithril.js has been a challenge to work with, accidentally using the documentation for version 2 of Mithril.js whilst actually using Mitril.js version 1. The documentation available is also sparse and not very exhaustive. The community is still small compared to the framework giants like React.js, Angular.js and Vue.js which makes finding good examples that describe advanced maneuvers a lot harder. The source code also has a high grade of coupling that makes modifications to it's inner workings problematic. As an example the developers wanted to extract the CSRF token on XHR responses, but \texttt{m.request} that was provided by Mithril.js skipped the JSON parsing and error handling if the developer provided their own \textit{extract} function. Due to the too high coupling in the Mithril.js implementation it was not possible to re-use their own logic and the developers had to re-implement the same functionality themselves.
+Mithril.js has been a challenge to work with, accidentally using the documentation for version 2 of Mithril.js whilst actually using Mithril.js version 1. The documentation available is also sparse and not very exhaustive. The community is still small compared to the framework giants like React.js, Angular.js and Vue.js which makes finding good examples that describe advanced maneuvers a lot harder. The source code also has a high grade of coupling that makes modifications to it's inner workings problematic. As an example the developers wanted to extract the CSRF token on XHR responses, but \texttt{m.request} that was provided by Mithril.js skipped the JSON parsing and error handling if the developer provided their own \textit{extract} function. Due to the too high coupling in the Mithril.js implementation it was not possible to re-use their own logic and the developers had to re-implement the same functionality themselves.
 
 The design pattern with components that is enforced by the framework was clearly document when writing untyped JavaScript code. However, the examples for writing the same code with typed TypeScript was either missing or was written in an experimental style that the authors of the framework tried. This led the developers to also try several different code styles during the project. Several of these style can still be found in the project, some with lower readability. The developers are still unsure what style to use, but no matter what, a re-factoring of several components, views and models is required.
 
@@ -708,241 +718,17 @@ The registration requirement for a full name can be removed after the views has 
 Tracked in issue: \href{https://github.com/LuleaUniversityOfTechnology/2018-project-roaster/issues/210}{\#210}
 
 \newpage
-\apptocmd{\sloppy}{\hbadness 10000\relax}{}{} 
-{\RaggedRight\begin{thebibliography}{1}
+\apptocmd{\sloppy}{\hbadness 10000\relax}{}{}
 
-\bibitem{rick}
-Ramgattie, R (2018, May 14) {\em  Cracking Java’s RNG for CSRF - Javax Faces and Why CSRF Token Randomness Matters.}
-Fetched 2019-01-10, from:
-\url{https://blog.securityevaluators.com/cracking-javas-rng-for-csrf-ea9cacd231d2}.
-
-\bibitem{breach}
-Gluck, Y., Harris N., \& Prado A. (2013, July 12) {\em BREACH: Reviving the Crime Attack, pp. 3, 11.} \\
-Fetched 2019-01-10, from:
-\url{http://breachattack.com/resources/BREACH\%20-\%20SSL,\%20gone\%20in\%2030\%20seconds.pdf}.
-
-\bibitem{roaster-network}
-LuleaUniversityOfTechnology/2018-project-roaster (2019) {\em 2018-project-roaster/network.ts at 19529..28560.}
-Fetched 2019-01-10, from:
-\url{https://github.com/LuleaUniversityOfTechnology/2018-project-roaster/blob/1952964/www/src/services/network.ts#L38}.
-
-\bibitem{mithril-trust}
-Mithril.js 2.0.0-rc3 (2018) {\em trust(html) - Mithril.js}
-Fetched 2019-01-10, from:
-\url{https://mithril.js.org/trust.html#how-it-works}.
-
-\bibitem{fips-198}
-NIST (2002, March 2) {\em FIPS 198-1, The Keyed-Hash Message Authentication Code (HMAC), p. 1.} \\
-Fetched 2019-01-10, from:
-\url{https://ia902804.us.archive.org/2/items/DTIC_ADA401868/DTIC_ADA401868.pdf}.
-
-\bibitem{fips-197}
-NIST (2001, November 26) {\em FIPS 197, Annoucing the Advanced Encryption Standard (AES), p. 5.} \\
-Fetched 2019-01-10, from:
-\url{https://ia802809.us.archive.org/0/items/DTIC_ADA403903/DTIC_ADA403903.pdf}.
-
-\bibitem{owasp-httponly}
-OWASP (2017) {\em HttpOnly.} Fetched 2019-01-11, from:
-\url{https://www.owasp.org/index.php/HttpOnly}.
-
-\bibitem{owasp-samesite}
-OWASP (2017) {\em SameSite.} Fetched 2019-01-11, from:
-\url{https://www.owasp.org/index.php/SameSite}.
-
-\bibitem{owasp-samesite-support}
-OWASP (2017) {\em Cross-Site Request Forgery (CSRF) Prevention Cheat Sheet.} Fetched 2019-01-11, from:
-\url{https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)_Prevention_Cheat_Sheet#Samesite_Cookie_Attribute}.
-
-\bibitem{owasp-top-10}
-OWASP (2017) {\em OWASP Top 10 - 2017, pp. 4, 6.} Fetched 2019-01-16, from: \url{https://www.owasp.org/images/7/72/OWASP_Top_10-2017_\%28en\%29.pdf.pdf}.
-
-\bibitem{go-database-sql} Golang.org (n.d.) {\em sql - The Go Programming Language.} Fetched 2019-01-16, from: \url{https://golang.org/pkg/database/sql/#DB.Query}.
-
-\bibitem{pyflakes} Pypi.org (2018, May 20) {\em pyflakes 2.0.0.} Fetched 2019-01-16, from: \url{https://pypi.org/project/pyflakes/}.
-
-\bibitem{mccabe} GitHub.com (2018, September 8) {\em PyCQA/mccabe: McCabe complexity checker for Python}. Fetched 2019-01-16, from: \url{https://github.com/pycqa/mccabe}.
-
-\bibitem{pycodestyle} Pypi.org (2018, April 10) {\em pycodestyle 2.4.0.} Fetched 2019-01-16, from: \url{https://pypi.org/project/pycodestyle/}.
-
-\bibitem{bcrypt-length}
-Goodin, D (2013, September 16) {\em Long passwords are good, but too much length can be a DoS hazard} \\
-Fetched 2019-01-10, from:
-\url{https://arstechnica.com/information-technology/2013/09/long-passwords-are-good-but-too-much-lenghttps://www.overleaf.com/project/5c373ca83d7cdc5c90606ef4th-can-be-bad-for-security/}.
-
-\bibitem{dropbox-passwords}
-Akhawe, D. (2016, September 21) {\em How Dropbox securely stores your passwords} \\
-Fetched 2019-01-10, from:
-\url{https://blogs.dropbox.com/tech/2016/09/how-dropbox-securely-stores-your-passwords/}.
-
-\bibitem{bcrypt-bug}
-Ferrara, A (2015, March 12) {\em Security Issue: Combining Bcrypt With Other Hash Functions} \\
-Fetched 2019-01-10, from:
-\url{https://blog.ircmaxell.com/2015/03/security-issue-combining-bcrypt-with.html}.
-
-\bibitem{db-benchmark}
-Castillo, J (2018) {\em PostgreSQL vs MySQL vs MariaDB - Help me Decide} \\
-Fetched 2019-01-11, from:
-\url{https://stackshare.io/stackups/mariadb-vs-mysql-vs-postgresql}.
-
-\bibitem{pg-hstore}
-PostgreSQL.org (2018) {\em PostgreSQL: Documentation: 11: F.16. hstore} Fetched 2019-01-13, from: \url{https://www.postgresql.org/docs/11/hstore.html}.
-
-\bibitem{redis-key-size}
-Redis.io (2018) {\em Data types - Redis} Fetched 2019-01-14, from: \url{https://redis.io/topics/data-types}.
-
-\bibitem{memcache-key-size}
-Google.com (2018) {\em Google Cloud} Fetched 2019-01-14, from: \url{https://cloud.google.com/appengine/docs/standard/python/memcache/}.
-
-\bibitem{key-value-comparison}
-Db-engines.com (2018) {\em Memcached vs. Redis comparison} Fetched 2019-01-14, from: \url{https://db-engines.com/en/system/Memcached\%3BRedis}.
-
-\bibitem{redis-vs-memcached}
-Infoworld.com (2018) {\em Why Redis beats Memcached for caching} Fetched 2019-01-14, from: \url{https://www.infoworld.com/article/3063161/nosql/why-redis-beats-memcached-for-caching.html}.
-
-\bibitem{why-docker}
-Docker.com (2018) {\em Why Docker?} Fetched 2019-01-14, from: \url{https://www.docker.com/why-docker}.
-
-\bibitem{codemirror} CodeMirror.net (n.d.) {\em CodeMirror.} Fetched 2019-01-16, from: \url{https://codemirror.net/}.
-
-\bibitem{codemirror-ts}
-Github.com (2018) {\em CodeMirror 6 prototype} Fetched 2019-01-15, from: \url{https://github.com/codemirror/codemirror.next}.
-
-\bibitem{what-is-eb}
-Amazon.com (2018) {\em What is Elastic Beanstalk?} Fetched 2019-01-16, from: \url{https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/Welcome.html}.
-
-\bibitem{typescript}
-Typescriptlang.org (2018) {\em Typescript - JavaScript that scales} Fetched 2019-01-16, from: \url{https://www.typescriptlang.org/}.
-
-\bibitem{mithril-js}
-Mithril.js.org (2018) {\em Mithril.js - Introduction} Fetched 2019-01-16, from: \url{https://mithril.js.org/}.
-
-\bibitem{webpack}
-Webpack.js.org (2018) {\em Webpack - Bundle your assets.} Fetched 2019-01-16, from: \url{https://webpack.js.org/}.
-
-\bibitem{react-component}
-Reactjs.org (2018) {\em React - Components and Props} Fetched 2019-01-16, from: \url{https://reactjs.org/docs/components-and-props.html}.
-
-\bibitem{dry} Hunt, A., Thomas, D. (1999) {\em The Pragmatic Programmer: From Journeyman to Master (1 ed.).} USA: Addison-Wesley. p. 320. ISBN 978-0201616224.
-
-\bibitem{pg-acid}
-Lane, T (2000, October 30) {\em Transaction Processing in PostgreSQL, p. 14.} Fetched 2019-01-13, from: \url{https://www.postgresql.org/files/developer/transactions.pdf}.
-
-\bibitem{pg-sql-conformance}
-PostgreSQL.org (2018) {\em PostgreSQL: Documentation: 11: Appendix D. SQL Conformance.} Fetched 2019-01-13, from: \url{https://www.postgresql.org/docs/11/features.html}.
-
-\bibitem{sqlite-when-to-use}
-SQLite.org (n.d.) {\em Appropriate Uses For SQLite.} Fetched 2019-01-13, from: \url{https://www.sqlite.org/whentouse.html}.
-
-\bibitem{pg-uuid}
-PostgreSQL.org (2018) {\em PostgreSQL: Documentation: 11: 8.12. UUID Type.} Fetched 2019-01-13, from: \url{https://www.postgresql.org/docs/11/datatype-uuid.html}.
-
-\bibitem{mysql-check-constraint}
-MySQL.com (2018) {\em MySQL :: MySQL 8.0 Reference Manual :: 13.1.20 CREATE TABLE Syntax.} Fetched 2019-01-13, from: \url{https://dev.mysql.com/doc/refman/8.0/en/create-table.html}.
-
-\bibitem{mysql-emulate-check}
-MySQLTutorial (n.d.) {\em MySQL CHECK Constraint Emulation.} Fetched 2019-01-13, from: \url{http://www.mysqltutorial.org/mysql-check-constraint/}.
-
-\bibitem{mariadb-data-integrity}
-Schönig, H. (2017, April 27) {\em Why favor PostgreSQL over MariaDB / MySQL.} Fetched 2019-01-13, from:  \url{https://www.cybertec-postgresql.com/en/why-favor-postgresql-over-mariadb-mysql/#}.
-
-\bibitem{fielding-rest} Fielding, R. T. (2000) {\em Representational State Transfer (REST).} Fetched 2019-01-13, from: \url{https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm}.
-
-\bibitem{mithril-speed} Mithril.js.org (2018) {\em Introduction - Mithril.js.} Fetched 2019-01-14, from: \url{https://mithril.js.org/}.
-
-\bibitem{oauth-nist} Poza, D. (2017, July 25) {\em Don't Pass on the New NIST Password Guidelines.} Fetched 2019-01-14, from: \url{https://auth0.com/blog/dont-pass-on-the-new-nist-password-guidelines/}.
-
-\bibitem{nist-passwords} Grassi, P. A. et al (2017, June) {\em NIST Special Publication 800-63-3 Digital Identity Guidelines.} Fetched 2019-01-14, from: \url{https://web.archive.org/web/20181119112330/https://pages.nist.gov/800-63-3/sp800-63-3.html}.
-
-\bibitem{roaster-router-route} GoDoc.org (2019) {\em 2018-project-roaster: github.com/LuleaUniversityOfTechnology/2018-project-roaster/router/route.}
-Fetched 2019-01-16, from:
-\url{https://godoc.org/github.com/LuleaUniversityOfTechnology/2018-project-roaster/router/route}.
-
-\bibitem{roaster-model} GoDoc.org (2019) {\em 2018-project-roaster: github.com/LuleaUniversityOfTechnology/2018-project-roaster/model.}
-Fetched 2019-01-16, from:
-\url{https://godoc.org/github.com/LuleaUniversityOfTechnology/2018-project-roaster/model}.
-
-\bibitem{roasterd-analyze-withflake8} GoDoc.org (2019) {\em 2018-project-roaster: github.com/LuleaUniversityOfTechnology/2018-project-roaster/analyze.} Fetched 2019-01-16, from: \url{https://godoc.org/github.com/LuleaUniversityOfTechnology/2018-project-roaster/analyze#WithFlake8}.
-
-\bibitem{flake8-json} Pypi.org (2018, January 1) {\em flake8-json 17.12.0}. Fetched 2019-01-16, from: \url{https://pypi.org/project/flake8-json/}.
-
-\bibitem{roasterd-cache} GoDoc.org (2019) {\em 2018-project-roaster: github.com/LuleaUniversityOfTechnology/2018-project-roaster/analyze/cache.} Fetched 2019-01-16, from: \url{https://godoc.org/github.com/LuleaUniversityOfTechnology/2018-project-roaster/analyze/cache}.
-
-\bibitem{sql-def-line6} LuleaUniversityOfTechnology/2018-project-roaster (2019) {\em 2018-project-roaster/roaster-database-v0.0.2.sql at master - LuleaUniversityOfTechnology/2018-project-roaster, line 6.}
-Fetched 2019-01-16, from: \url{https://github.com/LuleaUniversityOfTechnology/2018-project-roaster/blob/master/doc/postgresql/roaster-database-v0.0.2.sql#L6}.
-
-\bibitem{roasterd-cmd-inlinesql} LuleaUniversityOfTechnology/2018-project-roaster (2019) {\em 2018-project-roaster/main.go at master - LuleaUniversityOfTechnology/2018-project-roaster.} \url{https://github.com/LuleaUniversityOfTechnology/2018-project-roaster/blob/master/cmd/inlinesql/main.go}.
-
-\bibitem{go-pq-driver} GitHub.com (2019) {\em pq - A pure Go postgres driver for Go's database/sql package.} Fetched 2019-01-16, from: \url{https://github.com/lib/pq}.
-
-\bibitem{materialize} Materializecss.com (2019) {\em Documentation - Materialize.} Fetched 2019-01-16, from: \url{https://materializecss.com/}.
-
-\bibitem{milligram} Milligram.io (n.d.) {\em Milligram - A minimalist CSS framework.} Fetched 2019-01-16, from: \url{https://milligram.io/}.
-
-\bibitem{foundation} Foundation.zurb.com (2018) {\em The most advanced responsive front-end framework in the world. - Foundation.} Fetched 2019-01-16, from: \url{https://foundation.zurb.com/}.
-
-\bibitem{jquery-sucks} Zakas, N. (2013, August 13) {\em Securing jQuery against unintended XSS.} Fetched 2019-01-16, from: \url{https://blog.box.com/securing-jquery-against-unintended-xss}.
-
-\end{thebibliography}}
+%\bibliography{sources}
+\printbibliography
 
 \begin{appendix}
-\chapter{Setup and install manual}
-The setup and install manual is attached below, you can also view it at: \\ \url{https://github.com/LuleaUniversityOfTechnology/2018-project-roaster/blob/master/doc/guide/install.md}.
+    \chapter{Setup and install manual}
+    The setup and install manual is attached below, you can also view it at: \\ \url{https://github.com/LuleaUniversityOfTechnology/2018-project-roaster/blob/master/doc/guide/install.md}.
 
-The source code repository can be found here: \\ \url{https://github.com/LuleaUniversityOfTechnology/2018-project-roaster}.
+    The source code repository can be found here: \\ \url{https://github.com/LuleaUniversityOfTechnology/2018-project-roaster}.
 
-\includepdf[page=-]{install.pdf}
+    \includepdf[page=-]{install.pdf}
 \end{appendix}
-
-% Here follows some good to have examples.
-\if false
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=6cm]{xxx.png}
-    \caption{Lalalala.}
-    \label{fig:my_label}
-\end{figure}
-
-\begin{verbatim}
-PaymentTest > entitledFullAmount[ID: 505] FAILED
-    java.lang.AssertionError: expected:<4960> but was:<5960>
-        at org.junit.Assert.fail(Assert.java:88)
-        at org.junit.Assert.failNotEquals(Assert.java:834)
-        at org.junit.Assert.assertEquals(Assert.java:645)
-        at org.junit.Assert.assertEquals(Assert.java:631)
-        at PaymentTest.entitledFullAmount(PaymentTest.java:164)
-\end{verbatim}
-
-\begin{table}[H]
-\centering
-\caption{API endpoints and their methods}
-\begin{tabular}{|clcl|}
-\hline
-\textbf{Method}              & \textbf{Endpoint}                             & \textbf{Access}              & \textbf{Description}                 \\ \hline
-\multicolumn{1}{|c|}{GET}    & \multicolumn{1}{l|}{/}                        & \multicolumn{1}{c|}{N/A}     & Home page                            \\
-\multicolumn{1}{|c|}{GET}    & \multicolumn{1}{l|}{/login}                   & \multicolumn{1}{c|}{N/A}     & View customer login page                      \\
-\multicolumn{1}{|c|}{POST}   & \multicolumn{1}{l|}{/login}                   & \multicolumn{1}{c|}{N/A}     & Login customer user                           \\
-\multicolumn{1}{|c|}{GET}    & \multicolumn{1}{l|}{/register}                & \multicolumn{1}{c|}{N/A}     & View customer register page                   \\
-\multicolumn{1}{|c|}{POST}   & \multicolumn{1}{l|}{/register}                & \multicolumn{1}{c|}{N/A}     & Register customer user                        \\
-\multicolumn{1}{|c|}{GET}    & \multicolumn{1}{l|}{/user}                    & \multicolumn{1}{c|}{C, W, A} & View user page                       \\
-\multicolumn{1}{|c|}{POST}   & \multicolumn{1}{l|}{/user}                    & \multicolumn{1}{c|}{C, W, A} & Set user information                 \\
-\multicolumn{1}{|c|}{GET}    & \multicolumn{1}{l|}{/article?id=\{0..n\}}     & \multicolumn{1}{c|}{C, W, A} & Get specific article by ID           \\
-\multicolumn{1}{|c|}{POST}   & \multicolumn{1}{l|}{/cart}                    & \multicolumn{1}{c|}{C}       & Add artice to cart                   \\
-\multicolumn{1}{|l|}{DELETE} & \multicolumn{1}{l|}{/cart?pos=\{0..n\}}       & \multicolumn{1}{c|}{C}       & Delete article from cart by position \\
-\multicolumn{1}{|l|}{DELETE} & \multicolumn{1}{l|}{/cart}                    & \multicolumn{1}{c|}{C}       & Delete whole cart                    \\
-\multicolumn{1}{|c|}{GET}    & \multicolumn{1}{l|}{/cart}                    & \multicolumn{1}{c|}{C}       & View cart                            \\
-\multicolumn{1}{|c|}{PUT}    & \multicolumn{1}{l|}{/cart}                    & \multicolumn{1}{c|}{C}       & Order items in cart                  \\
-\multicolumn{1}{|c|}{GET}    & \multicolumn{1}{l|}{/order}                   & \multicolumn{1}{c|}{W, A}    & View current orders                  \\
-\multicolumn{1}{|c|}{GET}    & \multicolumn{1}{l|}{/order?id=\{0..n\}}       & \multicolumn{1}{c|}{W, A}    & View order by ID                     \\
-\multicolumn{1}{|c|}{GET}    & \multicolumn{1}{l|}{/warehouse}               & \multicolumn{1}{c|}{W}       & Warehouse user home page             \\
-\multicolumn{1}{|c|}{GET}    & \multicolumn{1}{l|}{/admin}                   & \multicolumn{1}{c|}{A}       & Admin user home page                 \\
-\multicolumn{1}{|c|}{PUT}    & \multicolumn{1}{l|}{/order?id=\{0..n\}}       & \multicolumn{1}{c|}{W}       & Accept order by ID                   \\
-\multicolumn{1}{|c|}{GET}    & \multicolumn{1}{l|}{/user?id=\{0..n\}}        & \multicolumn{1}{c|}{A}       & Display user by ID                   \\
-\multicolumn{1}{|c|}{GET}    & \multicolumn{1}{l|}{/search?query=\{string\}}        & \multicolumn{1}{c|}{N/A}       & Search for article                   \\
-\multicolumn{1}{|c|}{POST}   & \multicolumn{1}{l|}{/register?type=admin}     & \multicolumn{1}{c|}{A}       & Register new admin user              \\
-\multicolumn{1}{|c|}{POST}   & \multicolumn{1}{l|}{/register?type=warehouse} & \multicolumn{1}{c|}{A}       & Register new warehouse user          \\
-\multicolumn{1}{|c|}{POST}   & \multicolumn{1}{l|}{/register?type=customer}  & \multicolumn{1}{c|}{A}       & Register new customer user           \\ \hline
-\end{tabular}
-\end{table}
-\fi
 \end{document}
